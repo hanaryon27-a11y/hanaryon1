@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>노래책 · 한아련 HANARYON OFFICIAL</title>
+<meta name="description" content="한아련 노래책 — 부를 수 있는 곡 목록과 검색">
+<meta name="theme-color" content="#ffd54a">
+<meta property="og:title" content="노래책 · 한아련 HANARYON OFFICIAL">
+<meta property="og:description" content="한아련 노래책 — 부를 수 있는 곡 목록과 검색">
+<meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+
+.filter-bar{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:16px}
+.gtabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.gtab{padding:8px 14px;border:1px solid var(--line-strong);background:transparent;cursor:pointer;
+  font-size:calc(11px * var(--fs-label));font-weight:700;white-space:nowrap}
+.gtab.on{background:var(--main);border-color:var(--main);color:#0F0B00}
+.song-head,.song-row{display:grid;grid-template-columns:44px 1fr 190px 92px;gap:14px;align-items:center}
+.song-head{padding:0 12px 10px;font-family:var(--ff-mono);font-weight:800;letter-spacing:.16em;
+  font-size:calc(9px * var(--fs-label));color:var(--text-soft);border-bottom:1px solid var(--line-strong)}
+.song-row{padding:13px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.song-row:hover{background:var(--main-light)}
+.song-no{font-family:var(--ff-mono);font-weight:800;font-size:calc(10px * var(--fs-label));color:var(--main-dark)}
+.song-t{font-size:calc(14px * var(--fs-body));font-weight:700}
+.song-a{font-size:calc(12px * var(--fs-body));color:var(--text-soft)}
+.song-d{font-size:calc(12px * var(--fs-body));color:var(--main-deep);letter-spacing:.1em;text-align:right}
+.song-cnt{font-size:calc(12px * var(--fs-body));color:var(--text-soft);margin-bottom:10px}
+@media (max-width:959px){
+  .filter-bar{grid-template-columns:1fr}
+  .song-head{display:none}
+  .song-row{grid-template-columns:34px 1fr 60px;row-gap:2px}
+  .song-a{grid-column:2/4}
+  .song-d{grid-row:1;grid-column:3}
+}
+</style>
+<noscript><style>.wrap{opacity:1 !important}</style></noscript>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
+<header class="topbar">
+  <div class="inner">
+    <a class="nav-logo" href="../"><svg class="hex" viewBox="0 0 28 32" aria-hidden="true"><path d="M14 1.5l11.3 6.5v15L14 30.5 2.7 23V8z" fill="none" stroke="var(--main-dark)" stroke-width="2.4"/><circle cx="14" cy="15.7" r="3.4" fill="var(--main)"/></svg>한아련<span class="en">HANARYON</span></a>
+    <button type="button" class="burger" id="burger">MENU</button>
+    <div class="bar-right">
+      <nav class="menu" id="menu" aria-label="사이트 메뉴"><a href="../profile/" data-t="nav-1">프로필</a><a href="../schedule/" data-t="nav-2">일정</a><a href="../song/" data-t="nav-3" class="act">노래책</a><a href="../work/" data-t="nav-4">업보</a><a href="../diary/" data-t="nav-5">일기</a><a href="../dress/" data-t="nav-6">옷장</a></nav>
+      <div class="tools">
+        <button type="button" onclick="openAsk()" data-t="nav-ask">✉ 문의</button>
+        <button type="button" id="dkbox">☾ DARK</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+<div class="pagewrap">
+  <section class="masthead">
+    <p class="ghost" aria-hidden="true">SONGBOOK</p>
+    <p class="mh-index">INDEX No.03 · SONGBOOK</p>
+    <div class="mh-row">
+      <div>
+        <h1 class="mh-title">노래책</h1>
+        <p class="mh-sub">지금 부를 수 있는 곡 목록입니다. 검색하거나 장르로 걸러 볼 수 있습니다.</p>
+      </div>
+      <p class="mh-meta">HANARYON<br><b>FILE 03</b> · SONGBOOK<br>SIGNATURE · 사랑하게 될거야</p>
+    </div>
+  </section>
+  <section class="card">
+    <h2 class="card-title"><small>SONGBOOK</small><span data-t="sg-1">부를 수 있는 노래</span>
+      <span class="right" id="song-count">-</span></h2>
+    <p class="note" data-t="sg-note">곡을 누르면 제목과 아티스트가 복사됩니다</p>
+    <div class="filter-bar">
+      <input class="search-box" id="q" placeholder="제목 또는 아티스트 검색">
+    </div>
+    <div class="gtabs" id="gtabs"></div>
+    <div class="song-head"><span>NO</span><span>TITLE</span><span>ARTIST</span><span>LEVEL</span></div>
+    <div id="song-list"><div class="spinner"></div></div>
+  </section>
+</div>
+</div>
+<footer class="sitefoot">
+  <span class="en">HANARYON OFFICIAL</span>
+  © 2026 한아련. All rights reserved.<br>
+  비즈니스 문의 — oneryon01@gmail.com
+</footer>
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-desc">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" placeholder="내용을 입력하세요"></textarea>
+    <div class="askbtns">
+      <button type="button" class="no" onclick="closeAsk()">취소</button>
+      <button type="button" class="yes" onclick="sendAsk()">보내기</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+var SONGS = [], GENRE = '전체';
+
+function stars(n){
+  n = Math.max(1, Math.min(5, parseInt(n, 10) || 3));
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function draw(){
+  var q = (document.getElementById('q').value || '').trim().toLowerCase();
+  var list = SONGS.filter(function(s){
+    if (GENRE !== '전체' && txt(s.genre).trim() !== GENRE) return false;
+    if (!q) return true;
+    return (txt(s.title) + ' ' + txt(s.artist)).toLowerCase().indexOf(q) >= 0;
+  });
+  document.getElementById('song-count').textContent = list.length + ' SONGS';
+  var box = document.getElementById('song-list');
+  if (!list.length){
+    box.innerHTML = '<div class="empty"><span class="icon">♪</span>해당하는 곡이 없습니다</div>';
+    enableIframeAutoHeight();
+    return;
+  }
+  box.innerHTML = list.map(function(s, i){
+    return '<div class="song-row" data-song="' + esc(s.title) + '" data-artist="' + esc(s.artist || '') + '">'
+      + '<span class="song-no">' + String(i + 1).padStart(2, '0') + '</span>'
+      + '<span class="song-t">' + esc(s.title) + '</span>'
+      + '<span class="song-a">' + esc(s.artist || '-') + '</span>'
+      + '<span class="song-d">' + stars(s.difficulty) + '</span></div>';
+  }).join('');
+  enableIframeAutoHeight();
+}
+
+function copyRow(row){
+  var t = row.getAttribute('data-song') || '';
+  var a = row.getAttribute('data-artist') || '';
+  var s = a ? (t + ' - ' + a) : t;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(s).then(function(){ showToast('복사했습니다 · ' + s); },
+                                         function(){ showToast('복사에 실패했습니다'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = s; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('복사했습니다 · ' + s); } catch (e) { showToast('복사에 실패했습니다'); }
+    ta.remove();
+  }
+}
+
+document.getElementById('song-list').addEventListener('click', function(e){
+  var row = e.target.closest('.song-row'); if (row) copyRow(row);
+});
+document.getElementById('q').addEventListener('input', draw);
+
+async function init(){
+  try { initTexts(await loadProfileData()); } catch (e) {}
+  try { SONGS = await fetchAll('songs', { order: 'title', asc: true }); } catch (e) { SONGS = []; }
+  var gs = ['전체'];
+  SONGS.forEach(function(s){ var g = txt(s.genre).trim() || '기타'; if (gs.indexOf(g) < 0) gs.push(g); });
+  document.getElementById('gtabs').innerHTML = gs.map(function(g, i){
+    return '<button type="button" class="gtab' + (i === 0 ? ' on' : '') + '" data-genre="' + esc(g) + '">' + esc(g) + '</button>';
+  }).join('');
+  document.getElementById('gtabs').addEventListener('click', function(e){
+    var b = e.target.closest('.gtab'); if (!b) return;
+    GENRE = b.getAttribute('data-genre');
+    document.querySelectorAll('.gtab').forEach(function(x){ x.classList.toggle('on', x === b); });
+    draw();
+  });
+  draw();
+  markReady();
+  enableIframeAutoHeight();
+}
+init();
+</script>
+<script>
+function openAsk(){ document.getElementById('askmask').classList.add('on'); }
+function closeAsk(){ document.getElementById('askmask').classList.remove('on'); }
+async function sendAsk(){
+  var t = document.getElementById('askmsg');
+  var v = (t.value || '').trim();
+  if (!v) { showToast('내용을 입력하세요'); return; }
+  var ok = await insertRow('inquiries', { message: v });
+  showToast(ok ? '문의를 보냈습니다' : '전송에 실패했습니다. 잠시 후 다시 시도하세요');
+  if (ok) { t.value = ''; closeAsk(); }
+}
+document.getElementById('askmask').addEventListener('click', function(e){ if (e.target.id === 'askmask') closeAsk(); });
+
+(function(){
+  var box = document.getElementById('dkbox');
+  function label(){ box.textContent = document.body.classList.contains('dark') ? '☀ LIGHT' : '☾ DARK'; }
+  box.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    label();
+  });
+  label();
+  var b = document.getElementById('burger');
+  b.addEventListener('click', function(){ document.getElementById('menu').classList.toggle('open'); });
+})();
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

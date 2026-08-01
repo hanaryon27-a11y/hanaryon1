@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>일기 · 한아련 HANARYON OFFICIAL</title>
+<meta name="description" content="한아련 일기 — 방송 뒤의 기록과 사진">
+<meta name="theme-color" content="#ffd54a">
+<meta property="og:title" content="일기 · 한아련 HANARYON OFFICIAL">
+<meta property="og:description" content="한아련 일기 — 방송 뒤의 기록과 사진">
+<meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+
+.d-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.d-card{background:var(--card);border:1px solid var(--line);cursor:pointer;overflow:hidden;display:flex;flex-direction:column}
+.d-card:hover{border-color:var(--main)}
+.d-thumb{aspect-ratio:4/3;background:var(--main-light);overflow:hidden}
+.d-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.d-noimg{height:100%;display:flex;align-items:center;justify-content:center;color:var(--main-deep);
+  font-size:calc(28px * var(--fs-title))}
+.d-body{padding:16px 17px;flex:1;display:flex;flex-direction:column}
+.d-date{font-family:var(--ff-mono);font-weight:800;letter-spacing:.16em;
+  font-size:calc(9px * var(--fs-label));color:var(--main-dark)}
+.d-title{font-size:calc(15px * var(--fs-body));font-weight:900;letter-spacing:-.03em;margin-top:7px}
+.d-ex{font-size:calc(12px * var(--fs-body));color:var(--text-soft);margin-top:8px;line-height:1.7;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.d-mood{display:inline-block;margin-top:12px;padding:4px 10px;border:1px solid var(--main);
+  font-size:calc(10px * var(--fs-label));font-weight:700;color:var(--main-deep);align-self:flex-start}
+.d-full{white-space:pre-wrap;font-size:calc(13px * var(--fs-body));line-height:1.9;color:var(--text-mid);margin-top:14px}
+.d-full img,.d-imgs img{display:block;width:100%;margin:10px 0;border:1px solid var(--line);cursor:zoom-in}
+.cm-list{margin-top:18px;border-top:1px solid var(--line-strong);padding-top:14px}
+.cm{padding:10px 0;border-bottom:1px solid var(--line)}
+.cm b{font-size:calc(12px * var(--fs-body));font-weight:900}
+.cm span{font-family:var(--ff-mono);font-size:calc(9px * var(--fs-label));color:var(--text-soft);margin-left:8px}
+.cm p{margin:5px 0 0;font-size:calc(12px * var(--fs-body));color:var(--text-mid);white-space:pre-wrap}
+.cm-form{display:grid;grid-template-columns:130px 1fr auto;gap:8px;margin-top:14px}
+@media (max-width:959px){ .d-grid{grid-template-columns:1fr} .cm-form{grid-template-columns:1fr} }
+</style>
+<noscript><style>.wrap{opacity:1 !important}</style></noscript>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
+<header class="topbar">
+  <div class="inner">
+    <a class="nav-logo" href="../"><svg class="hex" viewBox="0 0 28 32" aria-hidden="true"><path d="M14 1.5l11.3 6.5v15L14 30.5 2.7 23V8z" fill="none" stroke="var(--main-dark)" stroke-width="2.4"/><circle cx="14" cy="15.7" r="3.4" fill="var(--main)"/></svg>한아련<span class="en">HANARYON</span></a>
+    <button type="button" class="burger" id="burger">MENU</button>
+    <div class="bar-right">
+      <nav class="menu" id="menu" aria-label="사이트 메뉴"><a href="../profile/" data-t="nav-1">프로필</a><a href="../schedule/" data-t="nav-2">일정</a><a href="../song/" data-t="nav-3">노래책</a><a href="../work/" data-t="nav-4">업보</a><a href="../diary/" data-t="nav-5" class="act">일기</a><a href="../dress/" data-t="nav-6">옷장</a></nav>
+      <div class="tools">
+        <button type="button" onclick="openAsk()" data-t="nav-ask">✉ 문의</button>
+        <button type="button" id="dkbox">☾ DARK</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+<div class="pagewrap">
+  <section class="masthead">
+    <p class="ghost" aria-hidden="true">JOURNAL</p>
+    <p class="mh-index">INDEX No.05 · JOURNAL</p>
+    <div class="mh-row">
+      <div>
+        <h1 class="mh-title">일기</h1>
+        <p class="mh-sub">방송 뒤에 남긴 기록. 한마디를 남길 수도 있습니다.</p>
+      </div>
+      <p class="mh-meta">HANARYON<br><b>FILE 05</b> · JOURNAL<br>DAY BY DAY</p>
+    </div>
+  </section>
+  <section class="card">
+    <h2 class="card-title"><small>JOURNAL</small><span data-t="dy-1">일기장</span>
+      <span class="right" id="d-count">-</span></h2>
+    <div class="d-grid" id="d-grid"><div class="spinner" style="grid-column:1/-1"></div></div>
+  </section>
+
+<div class="ov" id="ov" onclick="if(event.target===this)closeDiary()">
+  <div class="modal">
+    <button type="button" class="modal-x" onclick="closeDiary()" aria-label="닫기">✕</button>
+    <div id="d-modal"></div>
+  </div>
+</div>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
+  <button type="button" class="lightbox-close" onclick="closeLb()" aria-label="닫기">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+</div>
+</div>
+<footer class="sitefoot">
+  <span class="en">HANARYON OFFICIAL</span>
+  © 2026 한아련. All rights reserved.<br>
+  비즈니스 문의 — oneryon01@gmail.com
+</footer>
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-desc">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" placeholder="내용을 입력하세요"></textarea>
+    <div class="askbtns">
+      <button type="button" class="no" onclick="closeAsk()">취소</button>
+      <button type="button" class="yes" onclick="sendAsk()">보내기</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+var DIARY = [], CUR = null;
+
+function imgsOf(d){
+  var arr = Array.isArray(d.images) ? d.images : [];
+  if (!arr.length && txt(d.image_url).trim()) arr = [txt(d.image_url).trim()];
+  return arr.map(txt).filter(Boolean);
+}
+function dateOf(d){
+  var s = txt(d.diary_date).slice(0, 10);
+  if (s) return s;
+  return txt(d.created_at).slice(0, 10);
+}
+
+function render(){
+  var box = document.getElementById('d-grid');
+  document.getElementById('d-count').textContent = DIARY.length + ' ENTRIES';
+  if (!DIARY.length){
+    box.innerHTML = '<div style="grid-column:1/-1"><div class="empty"><span class="icon">✦</span>등록된 일기가 없습니다</div></div>';
+    enableIframeAutoHeight();
+    return;
+  }
+  box.innerHTML = DIARY.map(function(d, i){
+    var im = imgsOf(d);
+    var thumb = im.length
+      ? '<img src="' + esc(im[0]) + '" alt="" loading="lazy" referrerpolicy="no-referrer">'
+      : '<div class="d-noimg">✦</div>';
+    return '<article class="d-card" onclick="openDiary(' + i + ')">'
+      + '<div class="d-thumb">' + thumb + '</div>'
+      + '<div class="d-body"><div class="d-date">' + esc(dateOf(d)) + '</div>'
+      + '<div class="d-title">' + esc(d.title) + '</div>'
+      + '<div class="d-ex">' + esc(txt(d.content).slice(0, 90)) + '</div>'
+      + (txt(d.mood).trim() ? '<span class="d-mood">' + esc(d.mood) + '</span>' : '')
+      + '</div></article>';
+  }).join('');
+  enableIframeAutoHeight();
+}
+
+async function openDiary(i){
+  var d = DIARY[i]; if (!d) return;
+  CUR = d;
+  var im = imgsOf(d);
+  document.getElementById('d-modal').innerHTML =
+    '<div class="d-date">' + esc(dateOf(d)) + '</div>'
+    + '<h3>' + esc(d.title) + '</h3>'
+    + (txt(d.mood).trim() ? '<span class="d-mood">' + esc(d.mood) + '</span>' : '')
+    + '<div class="d-imgs">' + im.map(function(u){
+        return '<img src="' + esc(u) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onclick="openLb(this.src)">';
+      }).join('') + '</div>'
+    + '<div class="d-full">' + esc(d.content) + '</div>'
+    + '<div class="cm-list" id="cm-list"><div class="spinner"></div></div>'
+    + '<div class="cm-form">'
+    + '<input class="input" id="cm-nick" placeholder="닉네임" maxlength="20">'
+    + '<input class="input" id="cm-msg" placeholder="한마디 남기기" maxlength="200">'
+    + '<button type="button" class="btn solid" onclick="sendComment()">남기기</button></div>';
+  document.getElementById('ov').classList.add('show');
+  await loadComments(d.id);
+}
+function closeDiary(){ document.getElementById('ov').classList.remove('show'); CUR = null; }
+
+async function loadComments(did){
+  var rows = [];
+  try { rows = await fetchAll('comments', { order: 'created_at', asc: true, filter: { col: 'diary_id', val: did } }); } catch (e) {}
+  var box = document.getElementById('cm-list'); if (!box) return;
+  box.innerHTML = rows.length
+    ? rows.map(function(c){
+        return '<div class="cm"><b>' + esc(txt(c.nickname).trim() || '호빵이') + '</b>'
+          + '<span>' + esc(txt(c.created_at).slice(0, 10)) + '</span>'
+          + '<p>' + esc(c.message) + '</p></div>';
+      }).join('')
+    : '<div class="modal-empty" style="padding:16px 0;text-align:center;color:var(--text-soft)">첫 한마디를 남겨 보세요</div>';
+}
+
+async function sendComment(){
+  if (!CUR) return;
+  var msg = (document.getElementById('cm-msg').value || '').trim();
+  if (!msg) { showToast('내용을 입력하세요'); return; }
+  var nick = (document.getElementById('cm-nick').value || '').trim();
+  var ok = await insertRow('comments', { diary_id: CUR.id, nickname: nick, message: msg });
+  if (ok){
+    document.getElementById('cm-msg').value = '';
+    await loadComments(CUR.id);
+    showToast('남겼습니다');
+  } else showToast('전송에 실패했습니다');
+}
+
+function openLb(src){ document.getElementById('lb-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+function closeLb(){ document.getElementById('lightbox').classList.remove('open'); }
+
+async function init(){
+  try { initTexts(await loadProfileData()); } catch (e) {}
+  try { DIARY = await fetchAll('diary', { order: 'diary_date', asc: false }); } catch (e) { DIARY = []; }
+  render();
+  markReady();
+  enableIframeAutoHeight();
+}
+init();
+</script>
+<script>
+function openAsk(){ document.getElementById('askmask').classList.add('on'); }
+function closeAsk(){ document.getElementById('askmask').classList.remove('on'); }
+async function sendAsk(){
+  var t = document.getElementById('askmsg');
+  var v = (t.value || '').trim();
+  if (!v) { showToast('내용을 입력하세요'); return; }
+  var ok = await insertRow('inquiries', { message: v });
+  showToast(ok ? '문의를 보냈습니다' : '전송에 실패했습니다. 잠시 후 다시 시도하세요');
+  if (ok) { t.value = ''; closeAsk(); }
+}
+document.getElementById('askmask').addEventListener('click', function(e){ if (e.target.id === 'askmask') closeAsk(); });
+
+(function(){
+  var box = document.getElementById('dkbox');
+  function label(){ box.textContent = document.body.classList.contains('dark') ? '☀ LIGHT' : '☾ DARK'; }
+  box.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    label();
+  });
+  label();
+  var b = document.getElementById('burger');
+  b.addEventListener('click', function(){ document.getElementById('menu').classList.toggle('open'); });
+})();
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

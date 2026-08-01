@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>일정 · 한아련 HANARYON OFFICIAL</title>
+<meta name="description" content="한아련 방송 일정 — 월간 달력과 다가오는 일정">
+<meta name="theme-color" content="#ffd54a">
+<meta property="og:title" content="일정 · 한아련 HANARYON OFFICIAL">
+<meta property="og:description" content="한아련 방송 일정 — 월간 달력과 다가오는 일정">
+<meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+
+.cal-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.cal-month{font-size:calc(clamp(26px,3.4vw,42px) * var(--fs-display));font-weight:900;letter-spacing:-.06em;line-height:1}
+.cal-month small{font-family:var(--ff-mono);font-weight:800;letter-spacing:.2em;
+  font-size:calc(10px * var(--fs-label));color:var(--main-dark);display:block;margin-bottom:6px}
+.cal-nav{display:flex;gap:8px}
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-bottom:0}
+.cal-head span{padding:9px 0;text-align:center;font-family:var(--ff-mono);font-weight:800;letter-spacing:.14em;
+  font-size:calc(10px * var(--fs-label));color:var(--text-soft);border-right:1px solid var(--line)}
+.cal-head span:last-child{border-right:0}
+.cal-head .sun{color:#C0483F}
+
+.cal{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-top:1px solid var(--line)}
+.cell{min-height:106px;padding:7px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;cursor:default}
+.cell:nth-child(7n){border-right:0}
+.cell.pad{background:var(--bg);opacity:.5}
+.cell .dn{font-family:var(--ff-mono);font-weight:800;font-size:calc(11px * var(--fs-label));color:var(--text-soft)}
+.cell.sun .dn{color:#C0483F}
+.cell.today{background:var(--main-light)}
+.cell.today .dn{color:var(--main-deep)}
+.ev{margin-top:4px;padding:3px 6px;font-size:calc(11px * var(--fs-label));font-weight:700;line-height:1.4;
+  border-left:3px solid var(--main);background:var(--main-light);cursor:pointer;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev .tm{font-family:var(--ff-mono);font-weight:800;font-size:calc(9px * var(--fs-label));color:var(--text-soft);margin-right:4px}
+
+/* Band spans cells; the negative margin must equal cell padding (7px) + border (1px). */
+.band{margin:4px -8px 0 -7px;padding:3px 7px;font-size:calc(11px * var(--fs-label));font-weight:700;
+  background:var(--main);color:#0F0B00;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:21px}
+.band.s{margin-left:0;border-left:2px solid #0F0B00}
+.band.e{margin-right:0;border-right:2px solid #0F0B00}
+.band.ws{margin-left:0}
+.band.we{margin-right:0}
+.band.mute{color:transparent}
+
+.c-green{--evc:#5AA469} .c-blue{--evc:#4E86C7} .c-pink{--evc:#D4739A} .c-purple{--evc:#8A6FC4}
+.c-orange{--evc:#E08A3C} .c-red{--evc:#C0483F} .c-gray{--evc:#8A8578} .c-yellow{--evc:#ffd54a}
+.ev[class*="c-"]{border-left-color:var(--evc)}
+.band[class*="c-"]{background:var(--evc);color:#fff}
+.band.c-yellow{color:#0F0B00}
+
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;font-size:calc(11px * var(--fs-label));color:var(--text-soft)}
+.legend i{display:inline-block;width:11px;height:11px;background:var(--evc,var(--main));margin-right:5px;vertical-align:-1px}
+
+.modal{position:relative}
+.md-date{font-family:var(--ff-mono);font-weight:800;letter-spacing:.18em;font-size:calc(10px * var(--fs-label));color:var(--main-dark)}
+.md-row{padding:14px 0;border-bottom:1px solid var(--line)}
+.md-row:last-child{border-bottom:0}
+.md-t{font-size:calc(16px * var(--fs-title));font-weight:900;letter-spacing:-.03em}
+.md-m{font-size:calc(12px * var(--fs-body));color:var(--text-soft);margin-top:5px;white-space:pre-wrap}
+
+@media (max-width:959px){
+  .cell{min-height:78px;padding:5px}
+  .band{margin:3px -6px 0 -5px;padding:2px 5px}
+  .ev{padding:2px 4px}
+  .cal-head span{font-size:calc(9px * var(--fs-label))}
+}
+</style>
+<noscript><style>.wrap{opacity:1 !important}</style></noscript>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
+<header class="topbar">
+  <div class="inner">
+    <a class="nav-logo" href="../"><svg class="hex" viewBox="0 0 28 32" aria-hidden="true"><path d="M14 1.5l11.3 6.5v15L14 30.5 2.7 23V8z" fill="none" stroke="var(--main-dark)" stroke-width="2.4"/><circle cx="14" cy="15.7" r="3.4" fill="var(--main)"/></svg>한아련<span class="en">HANARYON</span></a>
+    <button type="button" class="burger" id="burger">MENU</button>
+    <div class="bar-right">
+      <nav class="menu" id="menu" aria-label="사이트 메뉴"><a href="../profile/" data-t="nav-1">프로필</a><a href="../schedule/" data-t="nav-2" class="act">일정</a><a href="../song/" data-t="nav-3">노래책</a><a href="../work/" data-t="nav-4">업보</a><a href="../diary/" data-t="nav-5">일기</a><a href="../dress/" data-t="nav-6">옷장</a></nav>
+      <div class="tools">
+        <button type="button" onclick="openAsk()" data-t="nav-ask">✉ 문의</button>
+        <button type="button" id="dkbox">☾ DARK</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+<div class="pagewrap">
+  <section class="masthead">
+    <p class="ghost" aria-hidden="true">SCHEDULE</p>
+    <p class="mh-index">INDEX No.02 · SCHEDULE</p>
+    <div class="mh-row">
+      <div>
+        <h1 class="mh-title">일정</h1>
+        <p class="mh-sub">이번 달 방송 계획. 칸을 누르면 그날의 자세한 내용이 열립니다.</p>
+      </div>
+      <p class="mh-meta">HANARYON<br><b>FILE 02</b> · SCHEDULE<br>TUE–SUN 11:00</p>
+    </div>
+  </section>
+  <section class="card">
+    <div class="cal-top">
+      <div class="cal-month"><small data-t="s-label">MONTHLY INDEX</small><span id="cal-title">-</span></div>
+      <div class="cal-nav">
+        <button type="button" class="btn sm" id="prev">‹ PREV</button>
+        <button type="button" class="btn sm" id="today-btn">TODAY</button>
+        <button type="button" class="btn sm" id="next">NEXT ›</button>
+      </div>
+    </div>
+    <div class="cal-head">
+      <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span class="sun">SUN</span>
+    </div>
+    <div class="cal" id="cal"><div class="spinner" style="grid-column:1/-1"></div></div>
+    <div class="legend">
+      <span><i style="--evc:#5AA469"></i>일반</span>
+      <span><i style="--evc:#D4739A"></i>특별</span>
+      <span><i style="--evc:#4E86C7"></i>콜라보</span>
+      <span><i style="--evc:#8A8578"></i>휴방</span>
+      <span data-t="s-legend">색이 채워진 띠는 기간 일정</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="card-title"><small>UPCOMING</small><span data-t="s-2">다가오는 일정</span></h2>
+    <div id="upcoming"><div class="spinner"></div></div>
+  </section>
+<div class="ov" id="ov" onclick="if(event.target===this)closeDay()">
+  <div class="modal">
+    <button type="button" class="modal-x" onclick="closeDay()" aria-label="닫기">✕</button>
+    <div id="md-body"></div>
+  </div>
+</div>
+</div>
+</div>
+<footer class="sitefoot">
+  <span class="en">HANARYON OFFICIAL</span>
+  © 2026 한아련. All rights reserved.<br>
+  비즈니스 문의 — oneryon01@gmail.com
+</footer>
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-desc">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" placeholder="내용을 입력하세요"></textarea>
+    <div class="askbtns">
+      <button type="button" class="no" onclick="closeAsk()">취소</button>
+      <button type="button" class="yes" onclick="sendAsk()">보내기</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+var ROWS = [];
+var cur = new Date(); cur.setDate(1);
+
+function key(d){
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function colorClass(row){
+  var c = txt(row.color).trim().toLowerCase();
+  var known = ['green','blue','pink','purple','orange','red','gray','yellow'];
+  if (known.indexOf(c) >= 0) return 'c-' + c;
+  var t = txt(row.type).trim();
+  if (t === '특별') return 'c-pink';
+  if (t === '콜라보') return 'c-blue';
+  if (t === '휴방') return 'c-gray';
+  return 'c-green';
+}
+function evOn(k){
+  return ROWS.filter(function(r){ return r.date <= k && k <= (r.end_date || r.date); });
+}
+
+function render(){
+  var y = cur.getFullYear(), m = cur.getMonth();
+  document.getElementById('cal-title').textContent = y + '. ' + String(m + 1).padStart(2, '0');
+  var first = new Date(y, m, 1);
+  var start = (first.getDay() + 6) % 7;
+  var last = new Date(y, m + 1, 0).getDate();
+  var prevLast = new Date(y, m, 0).getDate();
+  var cells = [];
+  for (var i = 0; i < start; i++) cells.push({ pad: true, n: prevLast - start + 1 + i });
+  for (var d = 1; d <= last; d++) cells.push({ pad: false, n: d, date: new Date(y, m, d) });
+  while (cells.length % 7 !== 0) cells.push({ pad: true, n: cells.length % 7 });
+
+  var todayKey = key(new Date());
+  document.getElementById('cal').innerHTML = cells.map(function(c, idx){
+    var col = idx % 7;
+    if (c.pad) return '<div class="cell pad' + (col === 6 ? ' sun' : '') + '"><div class="dn">' + c.n + '</div></div>';
+    var k = key(c.date);
+    var list = evOn(k);
+    var html = list.map(function(r){
+      var cc = colorClass(r);
+      if (r.end_date && r.end_date !== r.date){
+        var isStart = (r.date === k), isEnd = (r.end_date === k);
+        var cls = 'band ' + cc + (isStart ? ' s' : '') + (isEnd ? ' e' : '')
+          + (col === 0 ? ' ws' : '') + (col === 6 ? ' we' : '') + (isStart ? '' : ' mute');
+        return '<div class="' + cls + '" onclick="openDay(\'' + k + '\')">' + (isStart ? esc(r.title) : '&nbsp;') + '</div>';
+      }
+      var tm = txt(r.time).trim();
+      return '<div class="ev ' + cc + '" onclick="openDay(\'' + k + '\')">'
+        + (tm ? '<span class="tm">' + esc(tm) + '</span>' : '') + esc(r.title) + '</div>';
+    }).join('');
+    return '<div class="cell' + (col === 6 ? ' sun' : '') + (k === todayKey ? ' today' : '') + '">'
+      + '<div class="dn">' + c.n + '</div>' + html + '</div>';
+  }).join('');
+  enableIframeAutoHeight();
+}
+
+function openDay(k){
+  var list = evOn(k);
+  if (!list.length) return;
+  var rows = list.map(function(r){
+    var parts = [];
+    if (txt(r.time).trim()) parts.push(txt(r.time).trim());
+    if (txt(r.type).trim()) parts.push(txt(r.type).trim());
+    if (r.end_date && r.end_date !== r.date) parts.push(r.date + ' ~ ' + r.end_date);
+    var second = '';
+    if (txt(r.title2).trim()) {
+      second = '<div class="md-m">2부 · ' + esc(txt(r.time2)) + ' ' + esc(txt(r.title2)) + '</div>';
+    }
+    return '<div class="md-row"><div class="md-t">' + esc(r.title) + '</div>'
+      + (parts.length ? '<div class="md-m">' + esc(parts.join(' · ')) + '</div>' : '')
+      + second
+      + (txt(r.description).trim() ? '<div class="md-m">' + esc(r.description) + '</div>' : '')
+      + (txt(r.note).trim() ? '<div class="md-m">' + esc(r.note) + '</div>' : '')
+      + '</div>';
+  }).join('');
+  document.getElementById('md-body').innerHTML = '<div class="md-date">' + k + '</div>' + rows;
+  document.getElementById('ov').classList.add('show');
+}
+function closeDay(){ document.getElementById('ov').classList.remove('show'); }
+
+function renderUpcoming(){
+  var todayKey = key(new Date());
+  var list = ROWS.filter(function(r){ return (r.end_date || r.date) >= todayKey; })
+                 .sort(function(a, b){ return a.date < b.date ? -1 : 1; }).slice(0, 6);
+  var box = document.getElementById('upcoming');
+  if (!list.length){
+    box.innerHTML = '<div class="empty"><span class="icon">✦</span>등록된 다음 일정이 없습니다</div>';
+    return;
+  }
+  box.innerHTML = list.map(function(r){
+    var span = (r.end_date && r.end_date !== r.date) ? (r.date + ' ~ ' + r.end_date) : r.date;
+    return '<div class="md-row"><div class="md-t">' + esc(r.title) + '</div>'
+      + '<div class="md-m">' + esc(span) + (txt(r.time).trim() ? ' · ' + esc(r.time) : '')
+      + (txt(r.type).trim() ? ' · ' + esc(r.type) : '') + '</div></div>';
+  }).join('');
+}
+
+async function init(){
+  try {
+    var p = await loadProfileData();
+    initTexts(p);
+  } catch (e) {}
+  try {
+    ROWS = await fetchAll('schedule', { order: 'date', asc: true });
+    ROWS = ROWS.map(function(r){
+      r.date = txt(r.date).slice(0, 10);
+      r.end_date = txt(r.end_date).slice(0, 10) || null;
+      return r;
+    });
+  } catch (e) { ROWS = []; }
+  render();
+  renderUpcoming();
+  markReady();
+  enableIframeAutoHeight();
+}
+document.getElementById('prev').addEventListener('click', function(){ cur.setMonth(cur.getMonth() - 1); render(); });
+document.getElementById('next').addEventListener('click', function(){ cur.setMonth(cur.getMonth() + 1); render(); });
+document.getElementById('today-btn').addEventListener('click', function(){ cur = new Date(); cur.setDate(1); render(); });
+init();
+</script>
+<script>
+function openAsk(){ document.getElementById('askmask').classList.add('on'); }
+function closeAsk(){ document.getElementById('askmask').classList.remove('on'); }
+async function sendAsk(){
+  var t = document.getElementById('askmsg');
+  var v = (t.value || '').trim();
+  if (!v) { showToast('내용을 입력하세요'); return; }
+  var ok = await insertRow('inquiries', { message: v });
+  showToast(ok ? '문의를 보냈습니다' : '전송에 실패했습니다. 잠시 후 다시 시도하세요');
+  if (ok) { t.value = ''; closeAsk(); }
+}
+document.getElementById('askmask').addEventListener('click', function(e){ if (e.target.id === 'askmask') closeAsk(); });
+
+(function(){
+  var box = document.getElementById('dkbox');
+  function label(){ box.textContent = document.body.classList.contains('dark') ? '☀ LIGHT' : '☾ DARK'; }
+  box.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    label();
+  });
+  label();
+  var b = document.getElementById('burger');
+  b.addEventListener('click', function(){ document.getElementById('menu').classList.toggle('open'); });
+})();
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>옷장 · 한아련 HANARYON OFFICIAL</title>
+<meta name="description" content="한아련 옷장 — 새 옷과 기존 옷 아카이브">
+<meta name="theme-color" content="#ffd54a">
+<meta property="og:title" content="옷장 · 한아련 HANARYON OFFICIAL">
+<meta property="og:description" content="한아련 옷장 — 새 옷과 기존 옷 아카이브">
+<meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+
+.mode{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.mode button{padding:10px 16px;border:1px solid var(--line-strong);background:transparent;cursor:pointer;
+  font-size:calc(11px * var(--fs-label));font-weight:700}
+.mode button.on{background:var(--main);border-color:var(--main);color:#0F0B00}
+.ctabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.ctab{padding:8px 14px;border:1px solid var(--line-strong);background:transparent;cursor:pointer;
+  font-size:calc(11px * var(--fs-label));font-weight:700}
+.ctab.on{background:var(--main);border-color:var(--main);color:#0F0B00}
+
+.poster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.poster{position:relative;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--line-strong);
+  background:var(--main-light);cursor:zoom-in}
+.poster img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.poster:hover img{transform:scale(1.04)}
+.poster .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,0,.82) 0%,rgba(15,11,0,.12) 42%,rgba(15,11,0,0) 66%)}
+.poster .mark{position:absolute;top:12px;left:12px;font-family:var(--ff-mono);font-weight:800;letter-spacing:.2em;
+  font-size:calc(9px * var(--fs-label));color:#FFF8E6}
+.poster .new{position:absolute;top:10px;right:10px;background:var(--main);color:#0F0B00;
+  font-family:var(--ff-mono);font-weight:800;letter-spacing:.14em;font-size:calc(9px * var(--fs-label));padding:5px 9px}
+.poster .cap{position:absolute;left:14px;right:14px;bottom:13px;color:#FFF8E6}
+.poster .cat{font-family:var(--ff-mono);font-weight:800;letter-spacing:.18em;
+  font-size:calc(9px * var(--fs-label));color:var(--main)}
+.poster .nm{font-size:calc(15px * var(--fs-body));font-weight:900;letter-spacing:-.03em;margin-top:4px}
+.poster .dt{font-family:var(--ff-mono);font-size:calc(9px * var(--fs-label));opacity:.75;margin-top:3px}
+
+.album-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.album{border:1px solid var(--line);background:var(--card);cursor:zoom-in}
+.album .ph{aspect-ratio:3/4;overflow:hidden;background:var(--main-light)}
+.album .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.album .tx{padding:11px 12px}
+.album .cat{font-family:var(--ff-mono);font-weight:800;letter-spacing:.16em;
+  font-size:calc(9px * var(--fs-label));color:var(--main-dark)}
+.album .nm{font-size:calc(13px * var(--fs-body));font-weight:700;margin-top:4px}
+.pager{display:flex;gap:8px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+@media (max-width:959px){ .poster-grid{grid-template-columns:repeat(2,1fr)} .album-grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:400px){ .poster-grid{grid-template-columns:1fr} }
+</style>
+<noscript><style>.wrap{opacity:1 !important}</style></noscript>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
+<header class="topbar">
+  <div class="inner">
+    <a class="nav-logo" href="../"><svg class="hex" viewBox="0 0 28 32" aria-hidden="true"><path d="M14 1.5l11.3 6.5v15L14 30.5 2.7 23V8z" fill="none" stroke="var(--main-dark)" stroke-width="2.4"/><circle cx="14" cy="15.7" r="3.4" fill="var(--main)"/></svg>한아련<span class="en">HANARYON</span></a>
+    <button type="button" class="burger" id="burger">MENU</button>
+    <div class="bar-right">
+      <nav class="menu" id="menu" aria-label="사이트 메뉴"><a href="../profile/" data-t="nav-1">프로필</a><a href="../schedule/" data-t="nav-2">일정</a><a href="../song/" data-t="nav-3">노래책</a><a href="../work/" data-t="nav-4">업보</a><a href="../diary/" data-t="nav-5">일기</a><a href="../dress/" data-t="nav-6" class="act">옷장</a></nav>
+      <div class="tools">
+        <button type="button" onclick="openAsk()" data-t="nav-ask">✉ 문의</button>
+        <button type="button" id="dkbox">☾ DARK</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+<div class="pagewrap">
+  <section class="masthead">
+    <p class="ghost" aria-hidden="true">WARDROBE</p>
+    <p class="mh-index">INDEX No.06 · WARDROBE</p>
+    <div class="mh-row">
+      <div>
+        <h1 class="mh-title">옷장</h1>
+        <p class="mh-sub">새로 맞춘 옷은 포스터로, 지금까지의 옷은 앨범으로 모았습니다.</p>
+      </div>
+      <p class="mh-meta">HANARYON<br><b>FILE 06</b> · WARDROBE<br>RATIO 3:4</p>
+    </div>
+  </section>
+  <section class="card">
+    <h2 class="card-title"><small>WARDROBE</small><span data-t="dr-1">옷장</span>
+      <span class="right" id="dr-count">-</span></h2>
+    <div class="mode" id="mode">
+      <button type="button" class="on" data-mode="new" data-t="dr-mode1">새 옷</button>
+      <button type="button" data-mode="old" data-t="dr-mode2">기존 옷</button>
+    </div>
+    <div class="ctabs" id="ctabs"></div>
+    <div id="dr-body"><div class="spinner"></div></div>
+    <div class="pager" id="pager"></div>
+  </section>
+
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
+  <button type="button" class="lightbox-close" onclick="closeLb()" aria-label="닫기">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+</div>
+</div>
+<footer class="sitefoot">
+  <span class="en">HANARYON OFFICIAL</span>
+  © 2026 한아련. All rights reserved.<br>
+  비즈니스 문의 — oneryon01@gmail.com
+</footer>
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-desc">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" placeholder="내용을 입력하세요"></textarea>
+    <div class="askbtns">
+      <button type="button" class="no" onclick="closeAsk()">취소</button>
+      <button type="button" class="yes" onclick="sendAsk()">보내기</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+/* Categories live in three places: CATS here, the admin select, and DRESS_CATS in admin. */
+var CATS = [['all','전체'],['hair','헤어'],['outfit','의상'],['lens','렌즈']];
+var ITEMS = [], MODE = 'new', CAT = 'all', PAGE = 1, PER = 12;
+
+function isNew(it){
+  var b = it.badges;
+  if (Array.isArray(b)) return b.some(function(x){ return /NEW/i.test(txt(x && x.label ? x.label : x)); });
+  return /NEW/i.test(txt(b));
+}
+function catLabel(c){
+  var f = CATS.find(function(x){ return x[0] === txt(c).trim(); });
+  return f ? f[1] : (txt(c).trim() || '기타');
+}
+function filtered(){
+  return ITEMS.filter(function(it){
+    if (MODE === 'new' && !isNew(it)) return false;
+    if (MODE === 'old' && isNew(it)) return false;
+    if (CAT !== 'all' && txt(it.category).trim() !== CAT) return false;
+    return true;
+  });
+}
+
+function draw(){
+  var list = filtered();
+  document.getElementById('dr-count').textContent = list.length + ' ITEMS';
+  var pages = Math.max(1, Math.ceil(list.length / PER));
+  if (PAGE > pages) PAGE = 1;
+  var slice = list.slice((PAGE - 1) * PER, PAGE * PER);
+  var box = document.getElementById('dr-body');
+
+  if (!slice.length){
+    box.innerHTML = '<div class="empty"><span class="icon">✦</span>등록된 항목이 없습니다</div>';
+    document.getElementById('pager').innerHTML = '';
+    enableIframeAutoHeight();
+    return;
+  }
+
+  if (MODE === 'new'){
+    box.innerHTML = '<div class="poster-grid">' + slice.map(function(it){
+      var u = txt(it.image_url).trim();
+      return '<div class="poster" onclick="openLb(\'' + esc(u) + '\')">'
+        + (u ? '<img src="' + esc(u) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '')
+        + '<div class="shade"></div><div class="mark">HANARYON</div>'
+        + (isNew(it) ? '<div class="new">NEW</div>' : '')
+        + '<div class="cap"><div class="cat">' + esc(catLabel(it.category)) + '</div>'
+        + '<div class="nm">' + esc(it.name) + '</div>'
+        + '<div class="dt">' + esc(txt(it.created_at).slice(0, 10)) + '</div></div></div>';
+    }).join('') + '</div>';
+  } else {
+    box.innerHTML = '<div class="album-grid">' + slice.map(function(it){
+      var u = txt(it.image_url).trim();
+      return '<div class="album" onclick="openLb(\'' + esc(u) + '\')">'
+        + '<div class="ph">' + (u ? '<img src="' + esc(u) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '') + '</div>'
+        + '<div class="tx"><div class="cat">' + esc(catLabel(it.category)) + '</div>'
+        + '<div class="nm">' + esc(it.name) + '</div></div></div>';
+    }).join('') + '</div>';
+  }
+
+  document.getElementById('pager').innerHTML = pages > 1
+    ? Array.from({ length: pages }, function(_, i){
+        return '<button type="button" class="btn sm' + (i + 1 === PAGE ? ' solid' : '') + '" data-page="' + (i + 1) + '">'
+          + (i + 1) + '</button>';
+      }).join('')
+    : '';
+  enableIframeAutoHeight();
+}
+
+function openLb(src){ if (!src) return; document.getElementById('lb-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+function closeLb(){ document.getElementById('lightbox').classList.remove('open'); }
+
+document.getElementById('mode').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-mode]'); if (!b) return;
+  MODE = b.getAttribute('data-mode'); PAGE = 1;
+  document.querySelectorAll('#mode button').forEach(function(x){ x.classList.toggle('on', x === b); });
+  draw();
+});
+document.getElementById('ctabs').addEventListener('click', function(e){
+  var b = e.target.closest('.ctab'); if (!b) return;
+  CAT = b.getAttribute('data-cat'); PAGE = 1;
+  document.querySelectorAll('.ctab').forEach(function(x){ x.classList.toggle('on', x === b); });
+  draw();
+});
+document.getElementById('pager').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-page]'); if (!b) return;
+  PAGE = parseInt(b.getAttribute('data-page'), 10) || 1;
+  draw();
+});
+
+async function init(){
+  try { initTexts(await loadProfileData()); } catch (e) {}
+  document.getElementById('ctabs').innerHTML = CATS.map(function(c, i){
+    return '<button type="button" class="ctab' + (i === 0 ? ' on' : '') + '" data-cat="' + c[0] + '">' + c[1] + '</button>';
+  }).join('');
+  try { ITEMS = await fetchAll('dress_items', { order: 'created_at', asc: false }); } catch (e) { ITEMS = []; }
+  draw();
+  markReady();
+  enableIframeAutoHeight();
+}
+init();
+</script>
+<script>
+function openAsk(){ document.getElementById('askmask').classList.add('on'); }
+function closeAsk(){ document.getElementById('askmask').classList.remove('on'); }
+async function sendAsk(){
+  var t = document.getElementById('askmsg');
+  var v = (t.value || '').trim();
+  if (!v) { showToast('내용을 입력하세요'); return; }
+  var ok = await insertRow('inquiries', { message: v });
+  showToast(ok ? '문의를 보냈습니다' : '전송에 실패했습니다. 잠시 후 다시 시도하세요');
+  if (ok) { t.value = ''; closeAsk(); }
+}
+document.getElementById('askmask').addEventListener('click', function(e){ if (e.target.id === 'askmask') closeAsk(); });
+
+(function(){
+  var box = document.getElementById('dkbox');
+  function label(){ box.textContent = document.body.classList.contains('dark') ? '☀ LIGHT' : '☾ DARK'; }
+  box.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    label();
+  });
+  label();
+  var b = document.getElementById('burger');
+  b.addEventListener('click', function(){ document.getElementById('menu').classList.toggle('open'); });
+})();
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

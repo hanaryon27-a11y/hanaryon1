@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 · 한아련 HANARYON OFFICIAL</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --fs-display:1; --fs-title:1; --fs-body:1; --fs-label:1;
+  --main:#ffd54a; --main-dark:#B98A0E; --main-deep:#8A6600; --main-light:#FFF3C9;
+  --bg:#FFFDF6; --card:#FFFFFF; --ink:#0F0B00;
+  --text:#0F0B00; --text-mid:#3A3427; --text-soft:#655C4A;
+  --line:rgba(15,11,0,.16); --line-strong:rgba(15,11,0,.42);
+  --ff:'Noto Sans KR',system-ui,sans-serif; --ff-mono:Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-width:320px}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:calc(14px * var(--fs-body));line-height:1.6}
+a{color:inherit}
+button,input,select,textarea{font-family:inherit;color:inherit}
+
+.haGate{max-width:380px;margin:12vh auto;padding:30px 26px;background:var(--card);border:1px solid var(--line-strong)}
+.haGate h1{margin:0 0 4px;font-size:calc(22px * var(--fs-title));font-weight:900;letter-spacing:-.05em}
+.haGate p{margin:0 0 18px;font-size:calc(12px * var(--fs-body));color:var(--text-soft)}
+.haGate .input{margin-bottom:9px}
+.haGate .err{min-height:18px;margin-top:8px;font-size:calc(12px * var(--fs-body));color:#C0483F}
+
+.haApp{display:none;max-width:1140px;margin:0 auto;padding:0 22px 70px}
+.haApp.on{display:block}
+.hatop{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:20px 0 16px;border-bottom:1px solid var(--line-strong);margin-bottom:18px}
+.hatop h1{margin:0;font-size:calc(21px * var(--fs-title));font-weight:900;letter-spacing:-.05em}
+.hatop h1 small{display:block;font-family:var(--ff-mono);font-weight:800;letter-spacing:.2em;
+  font-size:calc(9px * var(--fs-label));color:var(--main-dark)}
+.hatop .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.dirty{font-size:calc(11px * var(--fs-label));color:#C0483F;min-width:0}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tab-btn{padding:9px 13px;border:1px solid var(--line-strong);background:transparent;cursor:pointer;
+  font-size:calc(12px * var(--fs-body));font-weight:700;white-space:nowrap}
+.tab-btn.active{background:var(--main);border-color:var(--main);color:#0F0B00}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+.card{background:var(--card);border:1px solid var(--line);padding:22px 24px;margin-bottom:18px}
+.card-title{display:flex;align-items:baseline;gap:12px;margin:0 0 16px;flex-wrap:wrap}
+.card-title small{font-family:var(--ff-mono);font-weight:800;letter-spacing:.2em;
+  font-size:calc(9px * var(--fs-label));color:var(--main-dark)}
+.card-title span{font-size:calc(17px * var(--fs-title));font-weight:900;letter-spacing:-.03em}
+.card-title .right{margin-left:auto;display:flex;gap:8px}
+.note{font-size:calc(12px * var(--fs-body));color:var(--text-soft);margin:0 0 14px;line-height:1.7}
+
+.fgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.fgrid.one{grid-template-columns:1fr}
+.field{min-width:0}
+.flb{display:block;font-size:calc(12px * var(--fs-body));font-weight:700;margin-bottom:6px}
+.fg{margin:6px 0 0;font-size:calc(11px * var(--fs-label));color:var(--text-soft);line-height:1.6;word-break:break-word}
+.input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--line-strong);
+  background:var(--card);font-size:calc(13px * var(--fs-body));outline:none}
+.input:focus{border-color:var(--main-dark)}
+textarea.input{resize:vertical;min-height:74px}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line-strong);
+  background:transparent;cursor:pointer;font-size:calc(12px * var(--fs-body));font-weight:700;white-space:nowrap}
+.btn:hover{border-color:var(--main-dark)}
+.btn.solid{background:var(--main);border-color:var(--main);color:#0F0B00}
+.btn.sm{padding:7px 10px;font-size:calc(11px * var(--fs-label))}
+.btn.danger{color:#C0483F;border-color:#E0B0AC}
+
+.table-wrap{overflow-x:auto;margin-top:14px}
+.table-wrap table{width:100%;border-collapse:collapse;min-width:520px}
+.table-wrap th{background:var(--main-light);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line-strong);
+  font-size:calc(11px * var(--fs-label));font-weight:800;letter-spacing:.06em;white-space:nowrap}
+.table-wrap td{padding:10px 12px;border-bottom:1px solid var(--line);font-size:calc(12px * var(--fs-body));vertical-align:middle}
+.table-wrap th:last-child,.table-wrap td:last-child{width:56px;text-align:center;white-space:nowrap}
+.delete-btn{border:1px solid #E0B0AC;background:transparent;color:#C0483F;cursor:pointer;
+  padding:5px 9px;font-size:calc(11px * var(--fs-label))}
+.empty-row{text-align:center;color:var(--text-soft);padding:22px 0}
+
+.thumb{margin-top:9px;border:1px solid var(--line);height:104px;display:none;
+  background:var(--main-light) center/contain no-repeat}
+.thumb.on{display:block}
+.thumb.err{display:flex;align-items:center;justify-content:center;color:#C0483F;
+  font-size:calc(11px * var(--fs-label));background-image:none;text-align:center;padding:0 10px}
+
+.pal{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pal .p{border:1px solid var(--line);padding:13px 14px;min-width:0}
+.pal .p .nm{font-size:calc(12px * var(--fs-body));font-weight:700}
+.pal .p .fg{margin-top:4px}
+.pal .row{display:flex;gap:8px;align-items:center;margin-top:9px}
+.pal input[type=color]{width:44px;height:34px;padding:0;border:1px solid var(--line-strong);background:none;cursor:pointer;flex:none}
+.pal input[type=text]{flex:1;min-width:0}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.preset{display:flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid var(--line-strong);
+  background:transparent;cursor:pointer;font-size:calc(11px * var(--fs-label));font-weight:700}
+.preset i{width:12px;height:12px;display:block}
+.ctr{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.ctr div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:calc(11px * var(--fs-label))}
+.ctr .ok{color:#3F7D4C;font-weight:800}
+.ctr .mid{color:#B07A1E;font-weight:800}
+.ctr .bad{color:#C0483F;font-weight:800}
+
+.tsgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.tsgrid .t{border:1px solid var(--line);padding:13px 15px}
+.tsgrid .t .n{font-size:calc(12px * var(--fs-body));font-weight:800}
+.tsgrid .t .u{font-size:calc(11px * var(--fs-label));color:var(--text-soft);margin:4px 0 10px}
+.tsgrid .t .ctl{display:flex;align-items:center;gap:10px}
+.tsgrid .t input[type=range]{flex:1;min-width:0;accent-color:var(--main-dark)}
+.tsgrid .t .v{font-family:var(--ff-mono);font-weight:800;font-size:calc(12px * var(--fs-body));min-width:42px;text-align:right}
+.tsprev{margin-top:16px;border:1px solid var(--line);padding:20px}
+.tsprev .p-disp{font-weight:900;letter-spacing:-.05em;line-height:1;font-size:calc(40px * var(--pv-display,1))}
+.tsprev .p-lbl{font-family:var(--ff-mono);font-weight:800;letter-spacing:.2em;
+  font-size:calc(10px * var(--pv-label,1));color:var(--main-dark);margin-top:13px}
+.tsprev .p-title{font-size:calc(22px * var(--pv-title,1));font-weight:900;margin-top:4px}
+.tsprev .p-body{font-size:calc(14px * var(--pv-body,1));color:var(--text-soft);margin-top:7px}
+
+.days{display:flex;gap:8px;flex-wrap:wrap}
+.days label{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid var(--line-strong);
+  font-size:calc(12px * var(--fs-body));font-weight:700;cursor:pointer}
+.wsearch{margin-bottom:14px}
+details{border:1px solid var(--line);padding:10px 13px;margin-top:12px}
+details summary{cursor:pointer;font-size:calc(12px * var(--fs-body));font-weight:700}
+details .table-wrap{margin-top:10px}
+
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);z-index:700;padding:11px 18px;
+  background:#0F0B00;color:#FFF8E6;font-size:calc(12px * var(--fs-body));opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--text-soft);font-size:calc(11px * var(--fs-label));padding:24px 0 34px}
+
+@media (max-width:820px){
+  .fgrid,.pal,.tsgrid{grid-template-columns:1fr}
+  .haApp{padding:0 16px 60px}
+}
+@media (max-width:400px){
+  .haApp{padding:0 12px 50px}
+  .card{padding:17px 14px}
+  .tab-btn{font-size:calc(11px * var(--fs-label));padding:8px 10px}
+}
+</style>
+</head>
+<body>
+<div id="haCheck" style="position:relative;display:none;margin:14px;padding:14px 16px;border:1px solid #C0483F;background:#fff;color:#0F0B00;font:13px/1.6 sans-serif;word-break:break-all"></div>
+
+<div class="haGate" id="haGate">
+  <h1>한아련 관리자</h1>
+  <p>Supabase 계정으로 로그인합니다</p>
+  <input class="input" id="haEmail" type="email" placeholder="이메일" autocomplete="username">
+  <input class="input" id="haPw" type="password" placeholder="비밀번호" autocomplete="current-password">
+  <button type="button" class="btn solid" id="haLoginBtn" style="width:100%;justify-content:center" onclick="tryLogin()">로그인</button>
+  <div class="err" id="haErr"></div>
+</div>
+
+<div class="haApp" id="haApp">
+  <div class="hatop">
+    <h1><small>HANARYON OFFICIAL</small>관리자</h1>
+    <div class="acts">
+      <span class="dirty" id="act-dirty"></span>
+      <a class="btn sm" id="act-view" href="../" target="_blank" rel="noopener">이 탭 페이지 보기</a>
+      <button type="button" class="btn sm" onclick="doBackup()">백업</button>
+      <label class="btn sm" for="haRestore">복원</label>
+      <input type="file" id="haRestore" accept="application/json" style="display:none">
+      <button type="button" class="btn sm solid" onclick="saveProfile()">저장</button>
+      <button type="button" class="btn sm" onclick="adminLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button type="button" class="tab-btn active" data-tab="main">메인</button>
+    <button type="button" class="tab-btn" data-tab="profile">프로필</button>
+    <button type="button" class="tab-btn" data-tab="schedule">일정</button>
+    <button type="button" class="tab-btn" data-tab="song">노래책</button>
+    <button type="button" class="tab-btn" data-tab="work">업보</button>
+    <button type="button" class="tab-btn" data-tab="diary">일기</button>
+    <button type="button" class="tab-btn" data-tab="dress">옷장</button>
+    <button type="button" class="tab-btn" data-tab="words">문구</button>
+    <button type="button" class="tab-btn" data-tab="theme">테마</button>
+    <button type="button" class="tab-btn" data-tab="inquiry">문의</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-main">
+  <div class="card">
+    <h2 class="card-title"><small>MAIN</small><span>메인 화면</span>
+      <span class="right"><button type="button" class="btn sm solid" onclick="saveProfile()">저장</button></span></h2>
+    <p class="note">메인 커버에 표시되는 값입니다. 저장 후 메인 페이지를 새로고침하면 반영됩니다.</p>
+    <div class="fgrid"><div class="field"><label class="flb" for="f-soop-id">SOOP 아이디</label><input class="input" id="f-soop-id" type="text"><p class="fg">방송국 주소 뒤의 영문 아이디. 프로필 사진과 방송국 링크가 이 값으로 만들어집니다</p></div>
+<div class="field"><label class="flb" for="f-avatar">프로필 사진 주소</label><input class="input" id="f-avatar" type="text" placeholder="https://"><p class="fg">비우면 SOOP 아이디 프사. 정사각형 1:1 이미지 주소</p></div>
+<div class="field"><label class="flb" for="f-main-photo">메인 커버 사진 주소</label><input class="input" id="f-main-photo" type="text" placeholder="https://"><p class="fg">가로 16:9 (예 1920×1080). 비우면 저장소의 기본 사진</p></div>
+<div class="field"><label class="flb" for="f-main-eyebrow">메인 영문 라벨</label><input class="input" id="f-main-eyebrow" type="text"><p class="fg">커버 오른쪽 위 작은 영문. 짧은 대문자</p></div>
+<div class="field"><label class="flb" for="f-main-title">메인 큰 문구</label><textarea class="input" id="f-main-title" rows="3"></textarea><p class="fg">줄바꿈 반영. 2줄 기준</p></div>
+<div class="field"><label class="flb" for="f-main-lead">메인 작은 문구</label><textarea class="input" id="f-main-lead" rows="3"></textarea><p class="fg">줄바꿈 반영. 2줄 기준</p></div>
+<div class="field"><label class="flb" for="f-about-text">메인 소개 문구</label><textarea class="input" id="f-about-text" rows="3"></textarea><p class="fg">커버 왼쪽 소개. 줄바꿈 반영. 2줄 기준</p></div>
+<div class="field"><label class="flb" for="f-next-live">다음 방송 표기</label><input class="input" id="f-next-live" type="text"><p class="fg">커버 왼쪽 위. 예: TUE–SUN · 11:00 KST</p></div>
+<div class="field"><label class="flb" for="f-legal">하단 한 줄</label><input class="input" id="f-legal" type="text"><p class="fg">커버 맨 아래 저작권·문의 한 줄</p></div>
+<div class="field"><label class="flb" for="f-link-soop">SOOP 방송국 링크</label><input class="input" id="f-link-soop" type="text" placeholder="https://"><p class="fg">비우면 SOOP 아이디로 자동 생성</p></div>
+<div class="field"><label class="flb" for="f-link-youtube">유튜브 링크</label><input class="input" id="f-link-youtube" type="text" placeholder="https://"><p class="fg">채널 주소</p></div>
+<div class="field"><label class="flb" for="f-link-cafe">팬카페 링크</label><input class="input" id="f-link-cafe" type="text" placeholder="https://"><p class="fg">카페 주소</p></div>
+<div class="field"><label class="flb" for="f-link-x">X 링크</label><input class="input" id="f-link-x" type="text" placeholder="https://"><p class="fg">비우면 프로필에서 숨김</p></div></div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title"><small>WEEK</small><span>방송 요일</span>
+      <span class="right"><button type="button" class="btn sm solid" onclick="saveProfile()">저장</button></span></h2>
+    <p class="note">체크한 요일이 방송일입니다. 0=월 ~ 6=일 순서로 저장됩니다.</p>
+    <div class="days" id="dayBox"></div>
+    <div class="fgrid" style="margin-top:16px"><div class="field"><label class="flb" for="f-day-0">월요일 표시 문구</label><input class="input" id="f-day-0" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div>
+<div class="field"><label class="flb" for="f-day-1">화요일 표시 문구</label><input class="input" id="f-day-1" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div>
+<div class="field"><label class="flb" for="f-day-2">수요일 표시 문구</label><input class="input" id="f-day-2" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div>
+<div class="field"><label class="flb" for="f-day-3">목요일 표시 문구</label><input class="input" id="f-day-3" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div>
+<div class="field"><label class="flb" for="f-day-4">금요일 표시 문구</label><input class="input" id="f-day-4" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div>
+<div class="field"><label class="flb" for="f-day-5">토요일 표시 문구</label><input class="input" id="f-day-5" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div>
+<div class="field"><label class="flb" for="f-day-6">일요일 표시 문구</label><input class="input" id="f-day-6" type="text"><p class="fg">메인·프로필 요일칸에 표시. 짧은 단어. 비우면 방송/휴방</p></div></div>
+    <input type="hidden" id="f-days">
+  </div>
+</div>
+
+  <div class="tab-panel" id="tab-profile">
+  <div class="card">
+    <h2 class="card-title"><small>DOSSIER</small><span>프로필</span>
+      <span class="right"><button type="button" class="btn sm solid" onclick="saveProfile()">저장</button></span></h2>
+    <div class="fgrid"><div class="field"><label class="flb" for="f-info-name">이름</label><input class="input" id="f-info-name" type="text"><p class="fg">프로필 큰 이름</p></div>
+<div class="field"><label class="flb" for="f-info-en">영문 표기</label><input class="input" id="f-info-en" type="text"><p class="fg">커버·프로필의 영문 이름</p></div>
+<div class="field"><label class="flb" for="f-info-catchphrase">캐치프레이즈</label><input class="input" id="f-info-catchphrase" type="text"><p class="fg">이름 아래 한 줄</p></div>
+<div class="field"><label class="flb" for="f-info-gender">성별</label><input class="input" id="f-info-gender" type="text"></div>
+<div class="field"><label class="flb" for="f-info-debut">데뷔일</label><input class="input" id="f-info-debut" type="text"><p class="fg">YYYY-MM-DD</p></div>
+<div class="field"><label class="flb" for="f-info-birth">생일</label><input class="input" id="f-info-birth" type="text"><p class="fg">MM-DD. 프로필 D-Day 계산에 사용</p></div>
+<div class="field"><label class="flb" for="f-info-fandom">팬네임</label><input class="input" id="f-info-fandom" type="text"></div>
+<div class="field"><label class="flb" for="f-info-agency">소속</label><input class="input" id="f-info-agency" type="text"></div>
+<div class="field"><label class="flb" for="f-info-content">주 콘텐츠</label><input class="input" id="f-info-content" type="text"><p class="fg">가운뎃점(·)으로 구분</p></div>
+<div class="field"><label class="flb" for="f-info-time">방송 시간</label><input class="input" id="f-info-time" type="text"><p class="fg">예: 화–일 오전 11시</p></div>
+<div class="field"><label class="flb" for="f-info-tags">특징 태그</label><input class="input" id="f-info-tags" type="text"><p class="fg">쉼표로 구분. 프로필 상단 배지</p></div>
+<div class="field"><label class="flb" for="f-quote">한마디</label><input class="input" id="f-quote" type="text"><p class="fg">프로필 인용문 한 줄</p></div>
+<div class="field"><label class="flb" for="f-msg">소개글</label><textarea class="input" id="f-msg" rows="3"></textarea><p class="fg">줄바꿈 반영</p></div>
+<div class="field"><label class="flb" for="f-now">지금 진행 중</label><textarea class="input" id="f-now" rows="3"></textarea><p class="fg">비우면 그 카드가 숨겨집니다. 줄바꿈 반영</p></div>
+<div class="field"><label class="flb" for="f-like-list">좋아하는 것</label><input class="input" id="f-like-list" type="text"><p class="fg">쉼표로 구분</p></div>
+<div class="field"><label class="flb" for="f-dislike-list">싫어하는 것</label><input class="input" id="f-dislike-list" type="text"><p class="fg">쉼표로 구분</p></div>
+<div class="field"><label class="flb" for="f-stats">능력치</label><textarea class="input" id="f-stats" rows="3"></textarea><p class="fg">한 줄에 하나. 형식: 이름:숫자 (0~100)</p></div>
+<div class="field"><label class="flb" for="f-milestones">기록해 둔 것</label><textarea class="input" id="f-milestones" rows="3"></textarea><p class="fg">한 줄에 하나. 형식: 상태|내용 (상태에 완료가 들어가면 채워진 배지)</p></div>
+<div class="field"><label class="flb" for="f-tmi-song">애창곡</label><input class="input" id="f-tmi-song" type="text"></div>
+<div class="field"><label class="flb" for="f-tmi-game">주로 하는 게임</label><input class="input" id="f-tmi-game" type="text"></div>
+<div class="field"><label class="flb" for="f-tmi-genre">선호 장르</label><input class="input" id="f-tmi-genre" type="text"></div></div>
+    <details>
+      <summary>이미지 주소 규격</summary>
+      <div class="table-wrap"><table>
+        <tr><th>쓰는 곳</th><th>비율</th><th>권장 크기</th></tr>
+        <tr><td>프로필 사진</td><td>1:1</td><td>400×400</td><td></td></tr>
+        <tr><td>메인 커버</td><td>16:9</td><td>1920×1080</td><td></td></tr>
+        <tr><td>옷장</td><td>3:4</td><td>900×1200</td><td></td></tr>
+        <tr><td>일기 사진</td><td>자유</td><td>가로 1200 이하</td><td></td></tr>
+      </table></div>
+      <p class="fg">이미지는 업로드하지 않고 주소만 저장합니다. SOOP 비공개 게시판에 올린 뒤 이미지 우클릭 → 이미지 주소 복사. 글 주소가 아니라 stimg.sooplive.com 으로 시작하는 주소여야 합니다.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title"><small>ARCHIVE</small><span>다시보기 (VOD)</span></h2>
+    <p class="note">프로필 하단 다시보기 칸에 들어갑니다. VOD 주소 vod.sooplive.com/player/<b>숫자</b> 의 숫자 부분만 입력합니다.</p>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="os-title">영상 제목</label><input class="input" id="os-title"><p class="fg">목록에 표시될 이름</p></div>
+      <div class="field"><label class="flb" for="os-vod">VOD 번호</label><input class="input" id="os-vod" placeholder="201092435"><p class="fg">숫자만</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addVod()">추가</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>제목</th><th>VOD 번호</th><th></th></tr></thead>
+      <tbody id="vod-list"></tbody>
+    </table></div>
+  </div>
+</div>
+  <div class="tab-panel" id="tab-schedule">
+  <div class="card">
+    <h2 class="card-title"><small>SCHEDULE</small><span>일정 추가</span></h2>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="sc-title">제목</label><input class="input" id="sc-title"><p class="fg">달력 칸에 표시되는 이름</p></div>
+      <div class="field"><label class="flb" for="sc-date">날짜</label><input class="input" id="sc-date" type="date"><p class="fg">시작일</p></div>
+      <div class="field"><label class="flb" for="sc-end">종료일</label><input class="input" id="sc-end" type="date"><p class="fg">비우면 하루. 채우면 그날까지 달력에 띠로 이어집니다</p></div>
+      <div class="field"><label class="flb" for="sc-time">시간</label><input class="input" id="sc-time" placeholder="11:00"><p class="fg">자유 형식</p></div>
+      <div class="field"><label class="flb" for="sc-type">종류</label>
+        <select class="input" id="sc-type"><option>일반</option><option>특별</option><option>콜라보</option><option>휴방</option></select>
+        <p class="fg">색을 따로 고르지 않으면 종류에 맞는 색이 쓰입니다</p></div>
+      <div class="field"><label class="flb" for="sc-color">색</label>
+        <select class="input" id="sc-color">
+          <option value="">종류에 맞춤</option><option value="green">초록</option><option value="blue">파랑</option>
+          <option value="pink">분홍</option><option value="purple">보라</option><option value="orange">주황</option>
+          <option value="red">빨강</option><option value="yellow">노랑</option><option value="gray">회색</option>
+        </select><p class="fg">달력 칸의 표시 색</p></div>
+      <div class="field"><label class="flb" for="sc-time2">2부 시간</label><input class="input" id="sc-time2"><p class="fg">2부가 없으면 비웁니다</p></div>
+      <div class="field"><label class="flb" for="sc-title2">2부 제목</label><input class="input" id="sc-title2"><p class="fg">2부가 없으면 비웁니다</p></div>
+      <div class="field" style="grid-column:1/-1"><label class="flb" for="sc-desc">설명</label><textarea class="input" id="sc-desc" rows="2"></textarea><p class="fg">날짜를 눌렀을 때 열리는 상세창에 표시</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addSchedule()">추가</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>날짜</th><th>제목</th><th>시간</th><th>종류</th><th></th></tr></thead>
+      <tbody id="sc-list"></tbody>
+    </table></div>
+  </div>
+</div>
+  <div class="tab-panel" id="tab-song">
+  <div class="card">
+    <h2 class="card-title"><small>SONGBOOK</small><span>노래 추가</span></h2>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="sg-title">제목</label><input class="input" id="sg-title"><p class="fg">곡 제목</p></div>
+      <div class="field"><label class="flb" for="sg-artist">아티스트</label><input class="input" id="sg-artist"><p class="fg">가수 이름</p></div>
+      <div class="field"><label class="flb" for="sg-genre">장르</label><input class="input" id="sg-genre" placeholder="발라드"><p class="fg">노래책 상단 탭이 여기 입력한 장르로 만들어집니다</p></div>
+      <div class="field"><label class="flb" for="sg-diff">난이도</label>
+        <select class="input" id="sg-diff"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select>
+        <p class="fg">1~5. 별 개수로 표시</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addSong()">추가</button></div>
+    <div class="field" style="margin-top:16px"><label class="flb" for="sg-search">목록 검색</label><input class="input" id="sg-search"><p class="fg">아래 목록만 걸러냅니다</p></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>제목</th><th>아티스트</th><th>장르</th><th>난이도</th><th></th></tr></thead>
+      <tbody id="sg-list"></tbody>
+    </table></div>
+    <details>
+      <summary>제목과 아티스트를 반대로 넣었을 때</summary>
+      <p class="fg">아래 버튼을 누르면 저장된 모든 곡의 제목과 아티스트가 서로 바뀝니다. 한 번 더 누르면 되돌아갑니다.</p>
+      <button type="button" class="btn sm danger" onclick="swapSongFields()">제목 ↔ 아티스트 전체 교체</button>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title"><small>OVERLAY</small><span>지금 트는 노래 (OBS)</span></h2>
+    <p class="note">OBS 브라우저 소스에 overlay 폴더 주소를 넣으면 여기서 입력한 곡이 화면에 뜹니다. 크기 700×120.</p>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="ov-title">곡 제목</label><input class="input" id="ov-title"><p class="fg">화면에 크게 표시</p></div>
+      <div class="field"><label class="flb" for="ov-artist">아티스트</label><input class="input" id="ov-artist"><p class="fg">제목 아래 작게 표시</p></div>
+      <div class="field"><label class="flb"><input type="checkbox" id="ov-show"> 화면에 표시</label><p class="fg">체크를 풀면 오버레이가 사라집니다</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="saveOverlay()">적용</button></div>
+  </div>
+</div>
+  <div class="tab-panel" id="tab-work">
+  <div class="card">
+    <h2 class="card-title"><small>PEOPLE</small><span>시청자</span></h2>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="vw-nick">닉네임</label><input class="input" id="vw-nick"><p class="fg">카드에 표시되는 이름</p></div>
+      <div class="field"><label class="flb" for="vw-id">SOOP 아이디</label><input class="input" id="vw-id"><p class="fg">넣으면 프로필 사진이 자동으로 붙습니다. 비우면 첫 글자</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addViewer()">추가</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>닉네임</th><th>아이디</th><th></th></tr></thead>
+      <tbody id="vw-list"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title"><small>TYPE</small><span>업보 종류</span></h2>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="tp-name">종류 이름</label><input class="input" id="tp-name"><p class="fg">예: 지각, 낚시</p></div>
+      <div class="field"><label class="flb" for="tp-cat">분류</label>
+        <select class="input" id="tp-cat"><option>일반</option><option>이벤트</option></select>
+        <p class="fg">이벤트로 두면 상세창에 EVENT 표시</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addType()">추가</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>이름</th><th>분류</th><th></th></tr></thead>
+      <tbody id="tp-list"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title"><small>COUNT</small><span>횟수 기록</span></h2>
+    <p class="note">시청자와 종류를 고르고 횟수를 입력합니다. 0으로 저장하면 상세창에서 숨겨집니다.</p>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="ct-viewer">시청자</label><select class="input" id="ct-viewer"></select><p class="fg">위에서 추가한 사람</p></div>
+      <div class="field"><label class="flb" for="ct-type">종류</label><select class="input" id="ct-type"></select><p class="fg">위에서 추가한 종류</p></div>
+      <div class="field"><label class="flb" for="ct-num">횟수</label><input class="input" id="ct-num" type="number" min="0" value="1"><p class="fg">숫자만</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="saveCount()">저장</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>시청자</th><th>종류</th><th>횟수</th><th></th></tr></thead>
+      <tbody id="ct-list"></tbody>
+    </table></div>
+  </div>
+</div>
+  <div class="tab-panel" id="tab-diary">
+  <div class="card">
+    <h2 class="card-title"><small>JOURNAL</small><span>일기 추가</span></h2>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="dy-title">제목</label><input class="input" id="dy-title"><p class="fg">목록 카드에 표시</p></div>
+      <div class="field"><label class="flb" for="dy-date">날짜</label><input class="input" id="dy-date" type="date"><p class="fg">최신순 정렬 기준</p></div>
+      <div class="field"><label class="flb" for="dy-mood">기분</label><input class="input" id="dy-mood" placeholder="좋음"><p class="fg">짧은 단어</p></div>
+      <div class="field"><label class="flb" for="dy-img">사진 주소</label><textarea class="input" id="dy-img" rows="2"></textarea><p class="fg">여러 장이면 줄바꿈 또는 쉼표로 구분. 첫 장이 목록 썸네일</p></div>
+      <div class="field" style="grid-column:1/-1"><label class="flb" for="dy-content">내용</label><textarea class="input" id="dy-content" rows="5"></textarea><p class="fg">줄바꿈 반영</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addDiary()">추가</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>날짜</th><th>제목</th><th>기분</th><th></th></tr></thead>
+      <tbody id="dy-list"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title"><small>COMMENT</small><span>남긴 한마디</span></h2>
+    <p class="note">일기에 달린 한마디입니다. 지우면 되돌릴 수 없습니다.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>날짜</th><th>닉네임</th><th>내용</th><th></th></tr></thead>
+      <tbody id="cm-list"></tbody>
+    </table></div>
+  </div>
+</div>
+  <div class="tab-panel" id="tab-dress">
+  <div class="card">
+    <h2 class="card-title"><small>WARDROBE</small><span>옷장 추가</span></h2>
+    <div class="fgrid">
+      <div class="field"><label class="flb" for="dr-name">이름</label><input class="input" id="dr-name"><p class="fg">포스터 아래 표시</p></div>
+      <div class="field"><label class="flb" for="dr-cat">분류</label>
+        <select class="input" id="dr-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select>
+        <p class="fg">옷장 페이지 상단 탭과 같은 분류</p></div>
+      <div class="field" style="grid-column:1/-1"><label class="flb" for="dr-img">이미지 주소</label><input class="input" id="dr-img" placeholder="https://"><p class="fg">세로 3:4 (예 900×1200)</p></div>
+      <div class="field"><label class="flb"><input type="checkbox" id="dr-new"> 새 옷으로 올리기</label><p class="fg">체크하면 새 옷 탭의 포스터 격자에, 체크하지 않으면 기존 옷 앨범에 들어갑니다</p></div>
+    </div>
+    <div style="margin-top:12px"><button type="button" class="btn solid" onclick="addDress()">추가</button></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>이름</th><th>분류</th><th>구분</th><th></th></tr></thead>
+      <tbody id="dr-list"></tbody>
+    </table></div>
+  </div>
+</div>
+
+  <div class="tab-panel" id="tab-words">
+    <div class="card">
+      <h2 class="card-title"><small>WORDING</small><span>화면 문구</span>
+        <span class="right"><button type="button" class="btn sm solid" onclick="saveProfile()">저장</button></span></h2>
+      <p class="note">사이트에 고정으로 나오는 문구를 바꿉니다. 비운 칸은 기본 문구가 그대로 나옵니다.</p>
+      <div class="field wsearch"><label class="flb" for="wordFind">항목 검색</label><input class="input" id="wordFind"><p class="fg">항목 이름이나 기본값으로 찾습니다</p></div>
+      <div class="fgrid"><div class="field"><label class="flb" for="f-txt-nav-1">메뉴 · 프로필</label><input class="input" id="f-txt-nav-1" type="text" placeholder="프로필"><p class="fg">비우면 기본 문구 · 기본값 프로필</p></div>
+<div class="field"><label class="flb" for="f-txt-nav-2">메뉴 · 일정</label><input class="input" id="f-txt-nav-2" type="text" placeholder="일정"><p class="fg">비우면 기본 문구 · 기본값 일정</p></div>
+<div class="field"><label class="flb" for="f-txt-nav-3">메뉴 · 노래책</label><input class="input" id="f-txt-nav-3" type="text" placeholder="노래책"><p class="fg">비우면 기본 문구 · 기본값 노래책</p></div>
+<div class="field"><label class="flb" for="f-txt-nav-4">메뉴 · 업보</label><input class="input" id="f-txt-nav-4" type="text" placeholder="업보"><p class="fg">비우면 기본 문구 · 기본값 업보</p></div>
+<div class="field"><label class="flb" for="f-txt-nav-5">메뉴 · 일기</label><input class="input" id="f-txt-nav-5" type="text" placeholder="일기"><p class="fg">비우면 기본 문구 · 기본값 일기</p></div>
+<div class="field"><label class="flb" for="f-txt-nav-6">메뉴 · 옷장</label><input class="input" id="f-txt-nav-6" type="text" placeholder="옷장"><p class="fg">비우면 기본 문구 · 기본값 옷장</p></div>
+<div class="field"><label class="flb" for="f-txt-nav-ask">문의 버튼</label><input class="input" id="f-txt-nav-ask" type="text" placeholder="✉ 문의"><p class="fg">비우면 기본 문구 · 기본값 ✉ 문의</p></div>
+<div class="field"><label class="flb" for="f-txt-ask-title">문의창 제목</label><input class="input" id="f-txt-ask-title" type="text" placeholder="문의하기"><p class="fg">비우면 기본 문구 · 기본값 문의하기</p></div>
+<div class="field"><label class="flb" for="f-txt-ask-desc">문의창 안내</label><input class="input" id="f-txt-ask-desc" type="text" placeholder="남긴 내용은 관리자만 확인합니다"><p class="fg">비우면 기본 문구 · 기본값 남긴 내용은 관리자만 확인합니다</p></div>
+<div class="field"><label class="flb" for="f-txt-m-next-label">메인 · 다음 방송 라벨</label><input class="input" id="f-txt-m-next-label" type="text" placeholder="NEXT LIVE"><p class="fg">비우면 기본 문구 · 기본값 NEXT LIVE</p></div>
+<div class="field"><label class="flb" for="f-txt-m-about-label">메인 · 소개 라벨</label><input class="input" id="f-txt-m-about-label" type="text" placeholder="ABOUT ARYEON"><p class="fg">비우면 기본 문구 · 기본값 ABOUT ARYEON</p></div>
+<div class="field"><label class="flb" for="f-txt-p-dday">프로필 · D-Day 라벨</label><input class="input" id="f-txt-p-dday" type="text" placeholder="생일까지"><p class="fg">비우면 기본 문구 · 기본값 생일까지</p></div>
+<div class="field"><label class="flb" for="f-txt-p-1">프로필 · 기본 기록 제목</label><input class="input" id="f-txt-p-1" type="text" placeholder="기본 기록"><p class="fg">비우면 기본 문구 · 기본값 기본 기록</p></div>
+<div class="field"><label class="flb" for="f-txt-p-2">프로필 · 한마디 제목</label><input class="input" id="f-txt-p-2" type="text" placeholder="한마디"><p class="fg">비우면 기본 문구 · 기본값 한마디</p></div>
+<div class="field"><label class="flb" for="f-txt-p-3">프로필 · 진행 중 제목</label><input class="input" id="f-txt-p-3" type="text" placeholder="지금 진행 중"><p class="fg">비우면 기본 문구 · 기본값 지금 진행 중</p></div>
+<div class="field"><label class="flb" for="f-txt-p-4">프로필 · 소개 제목</label><input class="input" id="f-txt-p-4" type="text" placeholder="소개"><p class="fg">비우면 기본 문구 · 기본값 소개</p></div>
+<div class="field"><label class="flb" for="f-txt-p-5">프로필 · 능력치 제목</label><input class="input" id="f-txt-p-5" type="text" placeholder="능력치"><p class="fg">비우면 기본 문구 · 기본값 능력치</p></div>
+<div class="field"><label class="flb" for="f-txt-p-6">프로필 · 좋아하는 것 제목</label><input class="input" id="f-txt-p-6" type="text" placeholder="좋아하는 것"><p class="fg">비우면 기본 문구 · 기본값 좋아하는 것</p></div>
+<div class="field"><label class="flb" for="f-txt-p-7">프로필 · 싫어하는 것 제목</label><input class="input" id="f-txt-p-7" type="text" placeholder="싫어하는 것"><p class="fg">비우면 기본 문구 · 기본값 싫어하는 것</p></div>
+<div class="field"><label class="flb" for="f-txt-p-8">프로필 · TMI 제목</label><input class="input" id="f-txt-p-8" type="text" placeholder="사소한 기록"><p class="fg">비우면 기본 문구 · 기본값 사소한 기록</p></div>
+<div class="field"><label class="flb" for="f-txt-p-9">프로필 · 마일스톤 제목</label><input class="input" id="f-txt-p-9" type="text" placeholder="기록해 둔 것"><p class="fg">비우면 기본 문구 · 기본값 기록해 둔 것</p></div>
+<div class="field"><label class="flb" for="f-txt-p-10">프로필 · 방송 요일 제목</label><input class="input" id="f-txt-p-10" type="text" placeholder="방송 요일"><p class="fg">비우면 기본 문구 · 기본값 방송 요일</p></div>
+<div class="field"><label class="flb" for="f-txt-p-11">프로필 · 다시보기 제목</label><input class="input" id="f-txt-p-11" type="text" placeholder="다시보기"><p class="fg">비우면 기본 문구 · 기본값 다시보기</p></div>
+<div class="field"><label class="flb" for="f-txt-p-12">프로필 · 링크 제목</label><input class="input" id="f-txt-p-12" type="text" placeholder="관련 링크"><p class="fg">비우면 기본 문구 · 기본값 관련 링크</p></div>
+<div class="field"><label class="flb" for="f-txt-s-label">일정 · 상단 라벨</label><input class="input" id="f-txt-s-label" type="text" placeholder="MONTHLY INDEX"><p class="fg">비우면 기본 문구 · 기본값 MONTHLY INDEX</p></div>
+<div class="field"><label class="flb" for="f-txt-s-legend">일정 · 범례 설명</label><input class="input" id="f-txt-s-legend" type="text" placeholder="색이 채워진 띠는 기간 일정"><p class="fg">비우면 기본 문구 · 기본값 색이 채워진 띠는 기간 일정</p></div>
+<div class="field"><label class="flb" for="f-txt-s-2">일정 · 다가오는 일정 제목</label><input class="input" id="f-txt-s-2" type="text" placeholder="다가오는 일정"><p class="fg">비우면 기본 문구 · 기본값 다가오는 일정</p></div>
+<div class="field"><label class="flb" for="f-txt-sg-1">노래책 · 제목</label><input class="input" id="f-txt-sg-1" type="text" placeholder="부를 수 있는 노래"><p class="fg">비우면 기본 문구 · 기본값 부를 수 있는 노래</p></div>
+<div class="field"><label class="flb" for="f-txt-sg-note">노래책 · 안내</label><input class="input" id="f-txt-sg-note" type="text" placeholder="곡을 누르면 제목과 아티스트가 복사됩니다"><p class="fg">비우면 기본 문구 · 기본값 곡을 누르면 제목과 아티스트가 복사됩니다</p></div>
+<div class="field"><label class="flb" for="f-txt-w-1">업보 · 제목</label><input class="input" id="f-txt-w-1" type="text" placeholder="업보 장부"><p class="fg">비우면 기본 문구 · 기본값 업보 장부</p></div>
+<div class="field"><label class="flb" for="f-txt-w-note">업보 · 안내</label><input class="input" id="f-txt-w-note" type="text" placeholder="카드를 누르면 종류별 횟수가 열립니다"><p class="fg">비우면 기본 문구 · 기본값 카드를 누르면 종류별 횟수가 열립니다</p></div>
+<div class="field"><label class="flb" for="f-txt-dy-1">일기 · 제목</label><input class="input" id="f-txt-dy-1" type="text" placeholder="일기장"><p class="fg">비우면 기본 문구 · 기본값 일기장</p></div>
+<div class="field"><label class="flb" for="f-txt-dr-1">옷장 · 제목</label><input class="input" id="f-txt-dr-1" type="text" placeholder="옷장"><p class="fg">비우면 기본 문구 · 기본값 옷장</p></div>
+<div class="field"><label class="flb" for="f-txt-dr-mode1">옷장 · 새 옷 버튼</label><input class="input" id="f-txt-dr-mode1" type="text" placeholder="새 옷"><p class="fg">비우면 기본 문구 · 기본값 새 옷</p></div>
+<div class="field"><label class="flb" for="f-txt-dr-mode2">옷장 · 기존 옷 버튼</label><input class="input" id="f-txt-dr-mode2" type="text" placeholder="기존 옷"><p class="fg">비우면 기본 문구 · 기본값 기존 옷</p></div></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-theme">
+    <div class="card">
+      <h2 class="card-title"><small>PALETTE</small><span>색</span>
+        <span class="right">
+          <button type="button" class="btn sm" onclick="resetPalette()">기본값으로</button>
+          <button type="button" class="btn sm solid" onclick="saveProfile()">저장</button></span></h2>
+      <p class="note">저장하면 모든 페이지의 색이 바뀝니다.</p>
+      <div class="presets" id="presets"></div>
+      <div class="pal"><div class="p"><div class="nm">포인트 색</div><p class="fg">버튼·배지·강조선</p><div class="row"><input type="color" id="c-theme-main" value="#ffd54a"><input class="input" type="text" id="f-theme-main" placeholder="#ffd54a"></div></div>
+<div class="p"><div class="nm">진한 포인트</div><p class="fg">작은 라벨 글자색. 배경과 4.5:1 이상</p><div class="row"><input type="color" id="c-theme-main-dark" value="#B98A0E"><input class="input" type="text" id="f-theme-main-dark" placeholder="#B98A0E"></div></div>
+<div class="p"><div class="nm">더 진한 포인트</div><p class="fg">강조 숫자·값</p><div class="row"><input type="color" id="c-theme-main-deep" value="#8A6600"><input class="input" type="text" id="f-theme-main-deep" placeholder="#8A6600"></div></div>
+<div class="p"><div class="nm">연한 포인트</div><p class="fg">카드 안쪽 배경·배지 바탕</p><div class="row"><input type="color" id="c-theme-main-light" value="#FFF3C9"><input class="input" type="text" id="f-theme-main-light" placeholder="#FFF3C9"></div></div>
+<div class="p"><div class="nm">배경색</div><p class="fg">페이지 바탕</p><div class="row"><input type="color" id="c-theme-bg" value="#FFFDF6"><input class="input" type="text" id="f-theme-bg" placeholder="#FFFDF6"></div></div>
+<div class="p"><div class="nm">로고색</div><p class="fg">상단 로고 글자</p><div class="row"><input type="color" id="c-theme-logo" value="#0F0B00"><input class="input" type="text" id="f-theme-logo" placeholder="#0F0B00"></div></div></div>
+      <div class="ctr" id="ctr"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title"><small>TYPE SCALE</small><span>글자 크기</span>
+        <span class="right">
+          <button type="button" class="btn sm" id="ts-reset">기본값으로</button>
+          <button type="button" class="btn sm solid" onclick="saveProfile()">저장</button></span></h2>
+      <p class="note">배율입니다. 1.00 이 기본, 1.20 이면 20% 크게.</p>
+      <div class="tsgrid" id="tsgrid"></div>
+      <div class="tsprev" id="tsprev">
+        <div class="p-disp">한아련 HANARYON</div>
+        <div class="p-lbl">FILE 01 · PROFILE</div>
+        <div class="p-title">기본 기록</div>
+        <div class="p-body">이 문장 크기가 본문 크기입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-inquiry">
+  <div class="card">
+    <h2 class="card-title"><small>INBOX</small><span>문의함</span>
+      <span class="right"><button type="button" class="btn sm" onclick="loadInquiry()">새로고침</button></span></h2>
+    <p class="note">사이트의 문의 버튼으로 들어온 내용입니다. 관리자만 볼 수 있습니다.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>받은 날짜</th><th>내용</th><th></th></tr></thead>
+      <tbody id="iq-list"></tbody>
+    </table></div>
+  </div>
+</div>
+</div>
+
+<footer>HANARYON OFFICIAL · ADMIN</footer>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+var profileKeys = ["soop-id", "avatar", "main-photo", "main-eyebrow", "main-title", "main-lead", "about-text", "next-live", "legal", "link-soop", "link-youtube", "link-cafe", "link-x", "day-0", "day-1", "day-2", "day-3", "day-4", "day-5", "day-6", "days", "info-name", "info-en", "info-catchphrase", "info-gender", "info-debut", "info-birth", "info-fandom", "info-agency", "info-content", "info-time", "info-tags", "quote", "msg", "now", "like-list", "dislike-list", "stats", "milestones", "tmi-song", "tmi-game", "tmi-genre", "theme-main", "theme-main-dark", "theme-main-deep", "theme-main-light", "theme-bg", "theme-logo", "type-display", "type-title", "type-body", "type-label", "txt-nav-1", "txt-nav-2", "txt-nav-3", "txt-nav-4", "txt-nav-5", "txt-nav-6", "txt-nav-ask", "txt-ask-title", "txt-ask-desc", "txt-m-next-label", "txt-m-about-label", "txt-p-dday", "txt-p-1", "txt-p-2", "txt-p-3", "txt-p-4", "txt-p-5", "txt-p-6", "txt-p-7", "txt-p-8", "txt-p-9", "txt-p-10", "txt-p-11", "txt-p-12", "txt-s-label", "txt-s-legend", "txt-s-2", "txt-sg-1", "txt-sg-note", "txt-w-1", "txt-w-note", "txt-dy-1", "txt-dr-1", "txt-dr-mode1", "txt-dr-mode2"];
+var IMG_FIELDS = ["avatar", "main-photo"];
+var THEME_DEFAULT = {"theme-main": "#ffd54a", "theme-main-dark": "#B98A0E", "theme-main-deep": "#8A6600", "theme-main-light": "#FFF3C9", "theme-bg": "#FFFDF6", "theme-logo": "#0F0B00"};
+var TS = [["type-display", "디스플레이", "페이지 맨 위 초대형 제목"], ["type-title", "섹션 제목", "각 구획 제목"], ["type-body", "본문", "설명·값·목록"], ["type-label", "작은 라벨", "영문 마이크로 라벨, 캡션"]];
+var TAB_PAGE = { main:'../', profile:'../profile/', schedule:'../schedule/', song:'../song/',
+                 work:'../work/', diary:'../diary/', dress:'../dress/', words:'../profile/',
+                 theme:'../', inquiry:'../' };
+var DIRTY = false;
+
+function el(id){ return document.getElementById(id); }
+function markDirty(){ DIRTY = true; el('act-dirty').textContent = '● 저장하지 않은 변경이 있습니다'; }
+function clearDirty(){ DIRTY = false; el('act-dirty').textContent = ''; }
+window.addEventListener('beforeunload', function(e){ if (DIRTY){ e.preventDefault(); e.returnValue = ''; } });
+
+function enterAdmin(){
+  el('haGate').style.setProperty('display','none','important');
+  el('haApp').style.setProperty('display','block','important');
+  el('haApp').classList.add('on');
+  setTimeout(function(){ el('haApp').style.setProperty('display','block','important'); }, 1200);
+  loadProfileFields();
+  loadSchedule(); loadSong(); loadViewers(); loadTypes(); loadCounts();
+  loadDiary(); loadComments(); loadDress(); loadInquiry(); loadVod(); loadOverlay();
+}
+
+async function tryLogin(){
+  var email = (el('haEmail').value || '').trim();
+  var pw = el('haPw').value || '';
+  var err = el('haErr');
+  if (!email || !pw){ err.textContent = '이메일과 비밀번호를 입력하세요'; return; }
+  if (!db){ err.textContent = 'Supabase에 연결할 수 없습니다'; return; }
+  el('haLoginBtn').disabled = true;
+  err.textContent = '확인 중';
+  try {
+    var r = await db.auth.signInWithPassword({ email: email, password: pw });
+    if (r.error){
+      err.textContent = /Invalid/i.test(r.error.message) ? '이메일 또는 비밀번호가 맞지 않습니다' : r.error.message;
+      el('haLoginBtn').disabled = false;
+      return;
+    }
+    enterAdmin();
+  } catch (e){
+    err.textContent = '로그인 중 오류: ' + ((e && e.message) || e);
+    el('haLoginBtn').disabled = false;
+  }
+}
+el('haPw').addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
+el('haEmail').addEventListener('keydown', function(e){ if (e.key === 'Enter') tryLogin(); });
+
+async function adminLogout(){
+  DIRTY = false;
+  try { if (db) await db.auth.signOut(); } catch (e) {}
+  location.reload();
+}
+
+(async function(){
+  try {
+    if (!db) return;
+    var r = await db.auth.getSession();
+    if (r && r.data && r.data.session) enterAdmin();
+  } catch (e) {}
+})();
+
+el('tabs').addEventListener('click', function(e){
+  var b = e.target.closest('.tab-btn'); if (!b) return;
+  var name = b.getAttribute('data-tab');
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(x){ x.classList.remove('active'); });
+  el('tab-' + name).classList.add('active');
+  b.classList.add('active');
+  el('act-view').href = TAB_PAGE[name] || '../';
+});
+
+/* profile fields */
+var DAY_KR = ['월','화','수','목','금','토','일'];
+el('dayBox').innerHTML = DAY_KR.map(function(d, i){
+  return '<label><input type="checkbox" class="day-chk" value="' + i + '">' + d + '</label>';
+}).join('');
+
+async function loadProfileFields(){
+  var saved = {};
+  try { saved = await loadProfileData(); } catch (e) {}
+  profileKeys.forEach(function(k){
+    var input = el('f-' + k);
+    if (input) input.value = txt(saved[k]);
+  });
+  Object.keys(THEME_DEFAULT).forEach(function(k){
+    if (!el('f-' + k).value) el('f-' + k).value = THEME_DEFAULT[k];
+    el('c-' + k).value = el('f-' + k).value;
+  });
+  TS.forEach(function(t){ if (!el('f-' + t[0]).value) el('f-' + t[0]).value = '1'; });
+  var days = txt(saved.days).split(',').map(function(x){ return x.trim(); });
+  document.querySelectorAll('.day-chk').forEach(function(c){ c.checked = days.indexOf(c.value) >= 0; });
+  tsPreview();
+  paintContrast();
+  IMG_FIELDS.forEach(function(k){ var i = el('f-' + k); if (i && i._paintThumb) i._paintThumb(); });
+  clearDirty();
+}
+
+async function saveProfile(){
+  if (!db){ showToast('Supabase에 연결할 수 없습니다'); return; }
+  var saved = {};
+  try { saved = await loadProfileData(); } catch (e) {}
+  el('f-days').value = Array.prototype.slice.call(document.querySelectorAll('.day-chk:checked'))
+    .map(function(c){ return c.value; }).join(',');
+  profileKeys.forEach(function(k){
+    var input = el('f-' + k);
+    if (input) saved[k] = input.value;
+  });
+  var r = await db.from('profile').upsert({ id: 1, data: saved });
+  if (r.error){ showToast('저장 실패: ' + r.error.message); return; }
+  clearDirty();
+  showToast('저장했습니다');
+}
+
+document.addEventListener('input', function(e){
+  if (e.target.classList && (e.target.classList.contains('input') || e.target.classList.contains('day-chk'))) markDirty();
+});
+document.addEventListener('change', function(e){
+  if (e.target.classList && e.target.classList.contains('day-chk')) markDirty();
+});
+
+/* backup / restore */
+function doBackup(){
+  var data = {};
+  profileKeys.forEach(function(k){ var i = el('f-' + k); data[k] = i ? i.value : ''; });
+  data.days = Array.prototype.slice.call(document.querySelectorAll('.day-chk:checked'))
+    .map(function(c){ return c.value; }).join(',');
+  var blob = new Blob([JSON.stringify({ saved_at: new Date().toISOString(), profile: data }, null, 2)],
+                      { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'hanaryon-profile-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+}
+el('haRestore').addEventListener('change', function(){
+  var f = this.files[0]; if (!f) return;
+  var rd = new FileReader();
+  rd.onload = function(){
+    try {
+      var j = JSON.parse(rd.result);
+      var p = j.profile || j;
+      profileKeys.forEach(function(k){ var i = el('f-' + k); if (i && p[k] !== undefined) i.value = p[k]; });
+      var days = txt(p.days).split(',').map(function(x){ return x.trim(); });
+      document.querySelectorAll('.day-chk').forEach(function(c){ c.checked = days.indexOf(c.value) >= 0; });
+      Object.keys(THEME_DEFAULT).forEach(function(k){ el('c-' + k).value = el('f-' + k).value || THEME_DEFAULT[k]; });
+      tsPreview(); paintContrast(); markDirty();
+      showToast('복원했습니다. 저장을 눌러야 반영됩니다');
+    } catch (e){ showToast('파일을 읽지 못했습니다'); }
+  };
+  rd.readAsText(f);
+  this.value = '';
+});
+
+/* image thumbnails */
+(function setupThumbs(){
+  IMG_FIELDS.forEach(function(k){
+    var input = el('f-' + k); if (!input) return;
+    var box = document.createElement('div');
+    box.className = 'thumb'; box.id = 'th-' + k;
+    input.parentElement.appendChild(box);
+    var probe = new Image();
+    function paint(){
+      var v = String(input.value || '').trim();
+      if (!v){ box.className = 'thumb'; box.textContent = ''; return; }
+      probe.onload = function(){
+        box.className = 'thumb on'; box.textContent = '';
+        box.style.backgroundImage = 'url("' + v.replace(/"/g, '%22') + '")';
+      };
+      probe.onerror = function(){
+        box.className = 'thumb on err'; box.style.backgroundImage = '';
+        box.textContent = '이 주소로는 이미지가 열리지 않습니다. 글 주소가 아니라 이미지 주소인지 확인하세요';
+      };
+      probe.referrerPolicy = 'no-referrer';
+      probe.src = v;
+    }
+    input.addEventListener('input', paint);
+    input._paintThumb = paint;
+  });
+})();
+
+/* palette */
+var PRESETS = [
+  ['골드',   ['#ffd54a','#B98A0E','#8A6600','#FFF3C9','#FFFDF6','#0F0B00']],
+  ['허니',   ['#F2A93B','#A96A0C','#7C4B00','#FCEAC9','#FFFAF0','#160E00']],
+  ['민트',   ['#7ED0B8','#2E8F76','#1F6B57','#DFF3EC','#F6FFFC','#06231C']],
+  ['라벤더', ['#B9A3E3','#6E55A8','#4E3A80','#EEE7FA','#FBF9FF','#150F26']],
+  ['체리',   ['#F0A0B4','#B85A75','#8E3A53','#FBE4EA','#FFF8FA','#26060F']]
+];
+var THEME_ORDER = Object.keys(THEME_DEFAULT);
+el('presets').innerHTML = PRESETS.map(function(p, i){
+  return '<button type="button" class="preset" data-preset="' + i + '">'
+    + p[1].slice(0, 3).map(function(c){ return '<i style="background:' + c + '"></i>'; }).join('')
+    + p[0] + '</button>';
+}).join('');
+el('presets').addEventListener('click', function(e){
+  var b = e.target.closest('.preset'); if (!b) return;
+  var p = PRESETS[parseInt(b.getAttribute('data-preset'), 10)];
+  THEME_ORDER.forEach(function(k, i){ el('f-' + k).value = p[1][i]; el('c-' + k).value = p[1][i]; });
+  paintContrast(); markDirty();
+});
+function resetPalette(){
+  THEME_ORDER.forEach(function(k){ el('f-' + k).value = THEME_DEFAULT[k]; el('c-' + k).value = THEME_DEFAULT[k]; });
+  paintContrast(); markDirty();
+}
+THEME_ORDER.forEach(function(k){
+  el('c-' + k).addEventListener('input', function(){ el('f-' + k).value = this.value; paintContrast(); markDirty(); });
+  el('f-' + k).addEventListener('input', function(){
+    if (/^#[0-9a-fA-F]{6}$/.test(this.value.trim())) el('c-' + k).value = this.value.trim();
+    paintContrast();
+  });
+});
+function _lum(hex){
+  var m = /^#([0-9a-fA-F]{6})$/.exec((hex || '').trim()); if (!m) return null;
+  var n = parseInt(m[1], 16);
+  var f = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function(v){
+    v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+}
+function _ratio(a, b){
+  var l1 = _lum(a), l2 = _lum(b);
+  if (l1 === null || l2 === null) return null;
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+function paintContrast(){
+  var v = {};
+  THEME_ORDER.forEach(function(k){ v[k] = el('f-' + k).value; });
+  var pairs = [
+    ['포인트 / 배경', v['theme-main'], v['theme-bg']],
+    ['진한 포인트 / 배경', v['theme-main-dark'], v['theme-bg']],
+    ['더 진한 포인트 / 배경', v['theme-main-deep'], v['theme-bg']],
+    ['로고 / 배경', v['theme-logo'], v['theme-bg']],
+    ['검정 글자 / 포인트 버튼', '#0F0B00', v['theme-main']]
+  ];
+  el('ctr').innerHTML = pairs.map(function(p){
+    var r = _ratio(p[1], p[2]);
+    if (r === null) return '<div><span>' + p[0] + '</span><span class="bad">색 형식 확인</span></div>';
+    var cls = r >= 4.5 ? 'ok' : (r >= 3 ? 'mid' : 'bad');
+    var word = r >= 4.5 ? '좋음' : (r >= 3 ? '아슬함' : '안 읽힘');
+    return '<div><span>' + p[0] + '</span><span class="' + cls + '">' + r.toFixed(2) + ':1 · ' + word + '</span></div>';
+  }).join('');
+}
+
+/* type scale */
+el('tsgrid').innerHTML = TS.map(function(t){
+  return '<div class="t"><div class="n">' + t[1] + '</div><div class="u">' + t[2] + '</div>'
+    + '<div class="ctl"><input type="range" id="r-' + t[0] + '" min="0.8" max="1.4" step="0.05" value="1">'
+    + '<span class="v" id="v-' + t[0] + '">1.00</span></div>'
+    + '<input type="hidden" id="f-' + t[0] + '" value="1"></div>';
+}).join('');
+function tsPreview(){
+  TS.forEach(function(t){
+    var v = parseFloat(el('f-' + t[0]).value) || 1;
+    el('r-' + t[0]).value = v;
+    el('v-' + t[0]).textContent = v.toFixed(2);
+    el('tsprev').style.setProperty('--pv-' + t[0].replace('type-', ''), v);
+  });
+}
+el('tsgrid').addEventListener('input', function(e){
+  var r = e.target.closest('input[type=range]'); if (!r) return;
+  el('f-' + r.id.slice(2)).value = r.value;
+  tsPreview(); markDirty();
+});
+el('ts-reset').addEventListener('click', function(){
+  TS.forEach(function(t){ el('f-' + t[0]).value = '1'; });
+  tsPreview(); markDirty();
+});
+
+/* wording search */
+el('wordFind').addEventListener('input', function(){
+  var q = this.value.trim().toLowerCase();
+  document.querySelectorAll('#tab-words .field').forEach(function(fd){
+    if (fd.classList.contains('wsearch')) return;
+    var input = fd.querySelector('input');
+    var hay = fd.textContent + ' ' + (input ? input.placeholder : '');
+    fd.style.display = (!q || hay.toLowerCase().indexOf(q) >= 0) ? '' : 'none';
+  });
+});
+
+/* tables */
+function rowsHtml(list, cols, table, reload){
+  if (!list.length) return '<tr><td class="empty-row" colspan="' + (cols(null).length + 1) + '">없음</td></tr>';
+  return list.map(function(r){
+    return '<tr>' + cols(r).map(function(c){ return '<td>' + c + '</td>'; }).join('')
+      + '<td><button type="button" class="delete-btn" data-del="' + table + '" data-id="' + r.id + '">삭제</button></td></tr>';
+  }).join('');
+}
+document.addEventListener('click', async function(e){
+  var b = e.target.closest('[data-del]'); if (!b) return;
+  if (!confirm('삭제할까요? 되돌릴 수 없습니다.')) return;
+  var t = b.getAttribute('data-del');
+  var ok = await deleteRow(t, b.getAttribute('data-id'));
+  showToast(ok ? '삭제했습니다' : '삭제에 실패했습니다');
+  if (!ok) return;
+  ({ schedule: loadSchedule, songs: loadSong, viewers: loadViewers, upbo_types: loadTypes,
+     upbo_counts: loadCounts, diary: loadDiary, comments: loadComments, dress_items: loadDress,
+     inquiries: loadInquiry, original_songs: loadVod })[t]();
+});
+
+/* schedule */
+async function loadSchedule(){
+  var rows = await fetchAll('schedule', { order: 'date', asc: false });
+  el('sc-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', '', '', ''];
+    var d = txt(r.date).slice(0, 10) + (r.end_date ? ' ~ ' + txt(r.end_date).slice(0, 10) : '');
+    return [esc(d), esc(r.title), esc(r.time), esc(r.type)];
+  }, 'schedule');
+}
+async function addSchedule(){
+  var title = el('sc-title').value.trim(), date = el('sc-date').value;
+  if (!title || !date){ showToast('제목과 날짜를 입력하세요'); return; }
+  var ok = await insertRow('schedule', {
+    title: title, date: date, end_date: el('sc-end').value || null,
+    time: el('sc-time').value.trim(), type: el('sc-type').value,
+    color: el('sc-color').value || null, time2: el('sc-time2').value.trim(),
+    title2: el('sc-title2').value.trim(), description: el('sc-desc').value.trim()
+  });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ ['sc-title','sc-time','sc-time2','sc-title2','sc-desc','sc-end'].forEach(function(i){ el(i).value = ''; }); loadSchedule(); }
+}
+
+/* songs */
+var SONG_ROWS = [];
+async function loadSong(){
+  SONG_ROWS = await fetchAll('songs', { order: 'title', asc: true });
+  drawSong();
+}
+function drawSong(){
+  var q = (el('sg-search').value || '').trim().toLowerCase();
+  var list = SONG_ROWS.filter(function(s){
+    return !q || (txt(s.title) + ' ' + txt(s.artist)).toLowerCase().indexOf(q) >= 0;
+  });
+  el('sg-list').innerHTML = rowsHtml(list, function(r){
+    if (!r) return ['', '', '', ''];
+    return [esc(r.title), esc(r.artist), esc(r.genre), esc(r.difficulty)];
+  }, 'songs');
+}
+el('sg-search').addEventListener('input', drawSong);
+async function addSong(){
+  var title = el('sg-title').value.trim();
+  if (!title){ showToast('제목을 입력하세요'); return; }
+  var ok = await insertRow('songs', {
+    title: title, artist: el('sg-artist').value.trim(),
+    genre: el('sg-genre').value.trim() || '기타',
+    difficulty: parseInt(el('sg-diff').value, 10) || 3
+  });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ el('sg-title').value = ''; el('sg-artist').value = ''; loadSong(); }
+}
+async function swapSongFields(){
+  if (!confirm('모든 곡의 제목과 아티스트를 서로 바꿉니다. 계속할까요?')) return;
+  for (var i = 0; i < SONG_ROWS.length; i++){
+    var s = SONG_ROWS[i];
+    await updateRow('songs', s.id, { title: txt(s.artist), artist: txt(s.title) });
+  }
+  showToast('교체했습니다');
+  loadSong();
+}
+
+/* work */
+var VIEWERS = [], TYPES = [];
+async function loadViewers(){
+  VIEWERS = await fetchAll('viewers', { order: 'sort_order', asc: true });
+  el('vw-list').innerHTML = rowsHtml(VIEWERS, function(r){
+    if (!r) return ['', ''];
+    return [esc(r.nickname), esc(r.soop_id)];
+  }, 'viewers');
+  el('ct-viewer').innerHTML = VIEWERS.map(function(v){
+    return '<option value="' + v.id + '">' + esc(v.nickname) + '</option>';
+  }).join('');
+}
+async function addViewer(){
+  var nick = el('vw-nick').value.trim();
+  if (!nick){ showToast('닉네임을 입력하세요'); return; }
+  var ok = await insertRow('viewers', { nickname: nick, soop_id: el('vw-id').value.trim() });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ el('vw-nick').value = ''; el('vw-id').value = ''; loadViewers(); }
+}
+async function loadTypes(){
+  TYPES = await fetchAll('upbo_types', { order: 'sort_order', asc: true });
+  el('tp-list').innerHTML = rowsHtml(TYPES, function(r){
+    if (!r) return ['', ''];
+    return [esc(r.name), esc(r.category)];
+  }, 'upbo_types');
+  el('ct-type').innerHTML = TYPES.map(function(t){
+    return '<option value="' + t.id + '">' + esc(t.name) + '</option>';
+  }).join('');
+}
+async function addType(){
+  var name = el('tp-name').value.trim();
+  if (!name){ showToast('종류 이름을 입력하세요'); return; }
+  var ok = await insertRow('upbo_types', { name: name, category: el('tp-cat').value });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ el('tp-name').value = ''; loadTypes(); }
+}
+async function loadCounts(){
+  var rows = await fetchAll('upbo_counts', { order: 'id', asc: true });
+  el('ct-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', '', ''];
+    var v = VIEWERS.find(function(x){ return x.id === r.viewer_id; });
+    var t = TYPES.find(function(x){ return x.id === r.type_id; });
+    return [esc(v ? v.nickname : r.viewer_id), esc(t ? t.name : r.type_id), esc(r.count)];
+  }, 'upbo_counts');
+}
+async function saveCount(){
+  var vid = parseInt(el('ct-viewer').value, 10), tid = parseInt(el('ct-type').value, 10);
+  if (!vid || !tid){ showToast('시청자와 종류를 먼저 추가하세요'); return; }
+  var n = parseInt(el('ct-num').value, 10) || 0;
+  var r = await db.from('upbo_counts')
+    .upsert({ viewer_id: vid, type_id: tid, count: n, updated_at: new Date().toISOString() },
+            { onConflict: 'viewer_id,type_id' });
+  showToast(r.error ? ('저장 실패: ' + r.error.message) : '저장했습니다');
+  loadCounts();
+}
+
+/* diary */
+async function loadDiary(){
+  var rows = await fetchAll('diary', { order: 'diary_date', asc: false });
+  el('dy-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', '', ''];
+    return [esc(txt(r.diary_date).slice(0, 10)), esc(r.title), esc(r.mood)];
+  }, 'diary');
+}
+async function addDiary(){
+  var title = el('dy-title').value.trim();
+  if (!title){ showToast('제목을 입력하세요'); return; }
+  var images = el('dy-img').value.split(/[\n,]+/).map(function(s){ return s.trim(); }).filter(Boolean);
+  var ok = await insertRow('diary', {
+    title: title, content: el('dy-content').value, mood: el('dy-mood').value.trim(),
+    diary_date: el('dy-date').value || null, image_url: images[0] || '', images: images
+  });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ ['dy-title','dy-content','dy-img','dy-mood'].forEach(function(i){ el(i).value = ''; }); loadDiary(); }
+}
+async function loadComments(){
+  var rows = await fetchAll('comments', { order: 'created_at', asc: false });
+  el('cm-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', '', ''];
+    return [esc(txt(r.created_at).slice(0, 10)), esc(r.nickname), esc(r.message)];
+  }, 'comments');
+}
+
+/* dress */
+async function loadDress(){
+  var rows = await fetchAll('dress_items', { order: 'created_at', asc: false });
+  el('dr-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', '', ''];
+    var isNew = Array.isArray(r.badges) && r.badges.some(function(b){ return /NEW/i.test(txt(b && b.label ? b.label : b)); });
+    var cat = { hair: '헤어', outfit: '의상', lens: '렌즈' }[txt(r.category).trim()] || txt(r.category);
+    return [esc(r.name), esc(cat), isNew ? '새 옷' : '기존'];
+  }, 'dress_items');
+}
+async function addDress(){
+  var name = el('dr-name').value.trim();
+  if (!name){ showToast('이름을 입력하세요'); return; }
+  var ok = await insertRow('dress_items', {
+    name: name, category: el('dr-cat').value, image_url: el('dr-img').value.trim(),
+    badges: el('dr-new').checked ? [{ label: 'NEW' }] : []
+  });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ el('dr-name').value = ''; el('dr-img').value = ''; el('dr-new').checked = false; loadDress(); }
+}
+
+/* vod */
+async function loadVod(){
+  var rows = await fetchAll('original_songs', { order: 'id', asc: false });
+  el('vod-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', ''];
+    return [esc(r.title), esc(r.vod_id)];
+  }, 'original_songs');
+}
+async function addVod(){
+  var title = el('os-title').value.trim();
+  if (!title){ showToast('제목을 입력하세요'); return; }
+  var ok = await insertRow('original_songs', { title: title, vod_id: el('os-vod').value.trim() });
+  showToast(ok ? '추가했습니다' : '추가에 실패했습니다');
+  if (ok){ el('os-title').value = ''; el('os-vod').value = ''; loadVod(); }
+}
+
+/* overlay */
+async function loadOverlay(){
+  try {
+    var r = await db.from('overlay_state').select('*').eq('id', 1).single();
+    var d = (r && r.data) || {};
+    el('ov-title').value = txt(d.song_title);
+    el('ov-artist').value = txt(d.song_artist);
+    el('ov-show').checked = !!d.is_visible;
+  } catch (e) {}
+}
+async function saveOverlay(){
+  var r = await db.from('overlay_state').upsert({
+    id: 1, song_title: el('ov-title').value.trim(), song_artist: el('ov-artist').value.trim(),
+    is_visible: el('ov-show').checked, updated_at: new Date().toISOString()
+  });
+  showToast(r.error ? ('적용 실패: ' + r.error.message) : '적용했습니다');
+}
+
+/* inquiry */
+async function loadInquiry(){
+  var rows = await fetchAll('inquiries', { order: 'created_at', asc: false });
+  el('iq-list').innerHTML = rowsHtml(rows, function(r){
+    if (!r) return ['', ''];
+    return [esc(txt(r.created_at).slice(0, 16).replace('T', ' ')), esc(r.message)];
+  }, 'inquiries');
+}
+</script>
+<script>
+/* Self check. Inline styles only, so it still shows when style.css fails to load. */
+(function(){
+  var box = document.getElementById('haCheck');
+  var lines = [];
+  function add(msg){
+    lines.push(msg);
+    box.style.display = 'block';
+    box.innerHTML = lines.map(function(l){ return '<div>' + l + '</div>'; }).join('');
+  }
+  window.addEventListener('error', function(e){
+    if (e.target && e.target !== window && (e.target.src || e.target.href)) add('파일을 불러오지 못했습니다: ' + (e.target.src || e.target.href));
+  }, true);
+  function measure(elm){
+    if (!elm) return '없음';
+    var s = getComputedStyle(elm);
+    return '높이 ' + Math.round(elm.getBoundingClientRect().height) + ' · display ' + s.display
+      + ' · opacity ' + s.opacity + ' · class ' + elm.className;
+  }
+  setTimeout(function(){
+    var g = document.getElementById('haGate'), a = document.getElementById('haApp');
+    var gv = g && g.getBoundingClientRect().height > 20 && parseFloat(getComputedStyle(g).opacity) > 0.05;
+    var av = a && a.classList.contains('on') && a.getBoundingClientRect().height > 20;
+    if (gv || av) return;
+    add('로그인 화면이 그려지지 않았습니다.');
+    add('gate → ' + measure(g));
+    add('app → ' + measure(a));
+    add('style: ' + (getComputedStyle(document.body).fontFamily ? 'O' : 'X')
+      + ' / supabase.js: ' + (typeof fetchAll === 'function' ? 'O' : 'X')
+      + ' / 라이브러리: ' + (typeof supabase !== 'undefined' ? 'O' : 'X'));
+    add('광고 차단 확장이 요소를 숨겼을 수 있습니다. 이 사이트에서 확장을 끄고 새로고침하세요.');
+  }, 2500);
+})();
+</script>
+</body>
+</html>

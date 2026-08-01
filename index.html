@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>한아련 HANARYON OFFICIAL</title>
+<meta name="description" content="HANARYON OFFICIAL — 한아련 방송 일정 · 노래책 · 업보 · 일기 · 옷장">
+<meta name="theme-color" content="#ffd54a">
+<meta property="og:title" content="한아련 HANARYON OFFICIAL">
+<meta property="og:description" content="HANARYON OFFICIAL — 한아련 방송 일정 · 노래책 · 업보 · 일기 · 옷장">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Gothic+A1:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fs-display:1; --fs-title:1; --fs-body:1; --fs-label:1;
+  --main:#ffd54a; --main-dark:#B98A0E; --main-deep:#8A6600; --main-light:#FFF3C9;
+  --bg:#FFFDF6; --card:#FFFFFF; --logo:#0F0B00;
+  --ink:#0F0B00; --cream:#FFFDF6;
+  --line:rgba(255,255,255,.38);
+  --text:#0F0B00; --text-mid:#3A3427; --text-soft:#6B6252;
+  --ff:'Noto Sans KR','Gothic A1',system-ui,sans-serif;
+  --ff-mono:Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{width:100%;min-width:320px;margin:0}
+body{
+  opacity:0;transition:opacity .42s ease;
+  color:#fff;background:var(--ink);
+  font-family:var(--ff);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  overflow-x:hidden;
+}
+body.ready{opacity:1}
+a{color:inherit;text-decoration:none}
+figure,h1,p,ol,ul{margin:0}
+button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* Design grid is 1600x900. Every size inside .stage is cqw: design px / 16. */
+.stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size;background:var(--ink)}
+body:not(.embed) .stage{width:min(100%,calc(100svh * 16 / 9))}
+.stage > .wrap{position:absolute;inset:0}
+
+.scene{position:absolute;z-index:0;inset:0;margin:0;overflow:hidden;background:var(--ink)}
+.scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+.veil{position:absolute;z-index:1;inset:0;pointer-events:none;background:
+  linear-gradient(to left,rgba(15,11,0,.72) 0%,rgba(15,11,0,.46) 26%,rgba(15,11,0,.06) 54%),
+  linear-gradient(to right,rgba(15,11,0,.62) 0%,rgba(15,11,0,.3) 22%,rgba(15,11,0,0) 40%),
+  linear-gradient(to top,rgba(15,11,0,.74) 0%,rgba(15,11,0,.18) 26%,rgba(15,11,0,0) 48%),
+  linear-gradient(to bottom,rgba(15,11,0,.58) 0%,rgba(15,11,0,0) 24%)}
+
+.topbar,.about,.copy,.edge-word,.identity,.links,.week,.legal{position:absolute;z-index:3}
+
+.mono,.eyebrow,.about > p,.next-live span,.links,.week,.menu a,.tools,.legal,.identity span{
+  font-family:var(--ff-mono);font-weight:800;letter-spacing:.15em}
+
+.topbar{top:5%;left:4%;right:4%;display:flex;align-items:flex-start;justify-content:space-between;gap:2cqw}
+.next-live{display:grid;gap:.12cqw}
+.next-live span{color:var(--main);font-size:calc(max(8px,.55cqw) * var(--fs-label))}
+.next-live strong{font-size:calc(1.6cqw * var(--fs-title));letter-spacing:-.045em;white-space:nowrap}
+.bar-right{display:flex;align-items:center;gap:1.4cqw;padding-top:.2cqw}
+.menu{display:flex;gap:1.35cqw}
+.menu a{font-size:calc(max(9px,.62cqw) * var(--fs-label));padding-bottom:.3cqw;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.menu a:hover{border-bottom-color:var(--main);color:var(--main)}
+.tools{display:flex;gap:.8cqw}
+.tools button{font-size:calc(max(9px,.62cqw) * var(--fs-label));font-family:var(--ff-mono);font-weight:800;letter-spacing:.15em;
+  padding:.42cqw .85cqw;border:1px solid rgba(255,255,255,.5);white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.tools button:hover{background:var(--main);border-color:var(--main);color:var(--ink)}
+
+.about{top:19%;left:4%;width:26%}
+.about > p{margin:0 0 .5cqw;color:var(--main);font-size:calc(max(8px,.55cqw) * var(--fs-label))}
+.about > strong{display:block;font-size:calc(max(10px,.72cqw) * var(--fs-body));line-height:1.65;font-weight:700}
+
+.copy{top:12%;right:4%;width:36%;text-align:right}
+.eyebrow{margin:0 0 1cqw;color:var(--main);font-size:calc(max(8px,.62cqw) * var(--fs-label))}
+.copy h1{font-size:calc(5cqw * var(--fs-display));font-weight:900;line-height:.93;letter-spacing:-.085em}
+.lead{margin:1.5cqw 0 0 auto;font-size:calc(max(11px,.78cqw) * var(--fs-body));line-height:1.75;font-weight:500}
+
+.edge-word{right:3%;top:44%;color:rgba(255,255,255,.9);font-family:var(--ff-mono);font-weight:900;
+  font-size:calc(6cqw * var(--fs-display));line-height:.8;letter-spacing:-.08em;mix-blend-mode:overlay;pointer-events:none}
+
+.identity{left:4%;bottom:5%;display:flex;align-items:baseline;gap:.75cqw}
+.identity strong{font-size:calc(1.7cqw * var(--fs-title));letter-spacing:-.08em;font-weight:900}
+.identity span{color:var(--main);font-size:calc(max(8px,.62cqw) * var(--fs-label))}
+.links{left:4%;bottom:calc(5% + 2.9cqw);display:flex;gap:1.5cqw;font-size:calc(max(8px,.56cqw) * var(--fs-label))}
+.links a{padding-bottom:.3cqw;border-bottom:2px solid var(--main)}
+.links a:hover{color:var(--main)}
+.legal{left:0;right:0;bottom:1.6%;text-align:center;color:rgba(255,255,255,.5);
+  font-size:calc(max(8px,.46cqw) * var(--fs-label));letter-spacing:.18em}
+
+.week{right:4%;bottom:5%;width:33%;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);
+  border-top:1px solid rgba(255,255,255,.72)}
+.week li{display:grid;grid-template-columns:1.5cqw 2.7cqw 1fr;align-items:center;min-height:2.45cqw;
+  border-bottom:1px solid var(--line)}
+.week li:nth-child(even){padding-left:.82cqw;border-left:1px solid var(--line)}
+.week i{color:#F0CE55;font-size:calc(max(8px,.46cqw) * var(--fs-label));font-style:normal}
+.week b{font-size:calc(max(8px,.62cqw) * var(--fs-label))}
+.week em{font-size:calc(max(9px,.67cqw) * var(--fs-body));font-style:normal;font-weight:700}
+.week .is-live em{color:var(--main)}
+.week .is-off b,.week .is-off em,.week .is-off i{opacity:.42}
+
+.askmask{position:fixed;inset:0;z-index:600;display:none;background:rgba(15,11,0,.72);
+  align-items:center;justify-content:center;padding:20px}
+.askmask.on{display:flex}
+body.embed .askmask{position:absolute;top:0;left:0;right:0;bottom:auto}
+body.embed .askmask.on{align-items:flex-start}
+.askmodal{width:min(420px,100%);background:var(--cream);color:var(--ink);padding:26px 24px;border:1px solid var(--ink)}
+.askmodal h3{margin:0;font-size:calc(17px * var(--fs-title));font-weight:900;letter-spacing:-.03em}
+.askmodal p{margin:8px 0 14px;font-size:calc(12px * var(--fs-body));color:var(--text-soft);line-height:1.6}
+.askmodal textarea{width:100%;box-sizing:border-box;height:130px;padding:12px;resize:vertical;
+  border:1px solid rgba(15,11,0,.3);background:#fff;color:var(--ink);font-family:inherit;font-size:calc(13px * var(--fs-body))}
+.askbtns{display:flex;gap:8px;margin-top:14px}
+.askbtns button{flex:1;padding:11px 0;font-family:var(--ff-mono);font-weight:800;letter-spacing:.14em;
+  font-size:calc(11px * var(--fs-label));border:1px solid var(--ink)}
+.askbtns .yes{background:var(--main)}
+.askbtns .no{background:transparent}
+.toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:700;padding:11px 18px;
+  background:var(--ink);color:var(--cream);font-size:calc(12px * var(--fs-body));opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.show{opacity:1}
+body.embed .toast{position:absolute}
+
+body.dark .askmodal{background:#191308;color:#FFF8E6;border-color:var(--main)}
+body.dark .askmodal textarea{background:#0F0B00;color:#FFF8E6;border-color:rgba(255,213,74,.4)}
+body.dark .askmodal p{color:#B9AE93}
+body.dark .askbtns button{border-color:var(--main);color:#FFF8E6}
+body.dark .askbtns .yes{color:var(--ink)}
+
+@media (max-width:959px){
+  .stage{--photoH:clamp(320px,108vw,540px);aspect-ratio:auto;height:auto;container-type:normal;background:var(--cream)}
+  body:not(.embed) .stage{width:100%}
+  .stage > .wrap{position:static;display:block}
+  .scene{position:relative;height:var(--photoH);inset:auto}
+  .scene img{object-position:44% 42%}
+  .veil{position:absolute;top:0;left:0;right:0;height:var(--photoH);background:
+    linear-gradient(to top,rgba(15,11,0,.72) 0%,rgba(15,11,0,.10) 34%,rgba(15,11,0,0) 60%),
+    linear-gradient(to bottom,rgba(15,11,0,.62) 0%,rgba(15,11,0,0) 26%)}
+  .topbar,.about,.copy,.edge-word,.identity,.links,.week,.legal{position:static}
+  .topbar{position:absolute;top:16px;left:18px;right:18px;flex-direction:column;gap:12px}
+  .bar-right{flex-direction:column;align-items:flex-start;gap:10px;padding:0}
+  .menu{flex-wrap:wrap;gap:12px}
+  .menu a{font-size:11px;padding-bottom:2px}
+  .tools button{font-size:10px;padding:7px 11px}
+  .next-live span{font-size:10px}
+  .next-live strong{font-size:17px}
+  .identity{position:absolute;top:calc(var(--photoH) - 46px);bottom:auto;left:18px;gap:9px}
+  .identity strong{font-size:22px}
+  .identity span{font-size:10px}
+  .edge-word{display:none}
+  .copy{width:auto;text-align:left;color:var(--ink);padding:26px 18px 0}
+  .eyebrow{margin:0 0 12px;color:var(--main-dark);font-size:10px}
+  .copy h1{font-size:clamp(34px,9.4vw,58px);letter-spacing:-.06em}
+  .lead{margin:14px 0 0;font-size:13px;line-height:1.7;color:var(--text-mid)}
+  .about{width:auto;padding:22px 18px 0;color:var(--ink)}
+  .about > p{margin:0 0 6px;color:var(--main-dark);font-size:10px}
+  .about > strong{font-size:13px;line-height:1.7;color:var(--text-mid)}
+  .links{padding:22px 18px 0;gap:16px;font-size:10px;color:var(--ink)}
+  .week{width:auto;margin:24px 18px 0;grid-template-columns:1fr;color:var(--ink);border-top:1px solid rgba(15,11,0,.5)}
+  .week li,.week li:nth-child(even){grid-template-columns:26px 46px 1fr;min-height:38px;padding-left:0;
+    border-left:0;border-bottom:1px solid rgba(15,11,0,.16)}
+  .week i{font-size:9px;color:var(--main-dark)}
+  .week b{font-size:11px}
+  .week em{font-size:13px}
+  .week .is-live em{color:var(--main-dark)}
+  .legal{padding:26px 18px 24px;color:var(--text-soft);font-size:9px;text-align:left}
+}
+
+body.dark{background:var(--ink)}
+@media (max-width:959px){
+  body.dark .stage{background:#0F0B00}
+  body.dark .copy,body.dark .about,body.dark .links,body.dark .week{color:#FFF8E6}
+  body.dark .lead,body.dark .about > strong{color:#C9BFA6}
+  body.dark .eyebrow,body.dark .about > p,body.dark .week i,body.dark .week .is-live em{color:var(--main)}
+  body.dark .week{border-top-color:rgba(255,248,230,.5)}
+  body.dark .week li,body.dark .week li:nth-child(even){border-bottom-color:rgba(255,248,230,.16)}
+  body.dark .legal{color:#8A8069}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms !important;animation-iteration-count:1 !important}
+}
+</style>
+<noscript><style>body{opacity:1 !important}</style></noscript>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
+
+<div class="stage">
+  <div class="wrap">
+    <figure class="scene" aria-hidden="true"><img id="scene-img" src="./assets/scene-garden.jpg" alt=""></figure>
+    <div class="veil" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="next-live">
+        <span data-t="m-next-label">NEXT LIVE</span>
+        <strong data-hook="next-live">TUE–SUN · 11:00 KST</strong>
+      </div>
+      <div class="bar-right">
+        <nav class="menu" aria-label="사이트 메뉴">
+          <a href="./profile/" data-t="nav-1">프로필</a>
+          <a href="./schedule/" data-t="nav-2">일정</a>
+          <a href="./song/" data-t="nav-3">노래책</a>
+          <a href="./work/" data-t="nav-4">업보</a>
+          <a href="./diary/" data-t="nav-5">일기</a>
+          <a href="./dress/" data-t="nav-6">옷장</a>
+        </nav>
+        <div class="tools">
+          <button type="button" onclick="openAsk()" data-t="nav-ask">✉ 문의</button>
+          <button type="button" id="dkbox">☾ DARK</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="about">
+      <p data-t="m-about-label">ABOUT ARYEON</p>
+      <strong data-hook="about-text">호박벌처럼 부지런하게,<br>종합게임 · 노래 · 소통으로 채우는 하루.</strong>
+    </div>
+
+    <div class="copy">
+      <p class="eyebrow" data-hook="main-eyebrow">GOLDEN INDEX</p>
+      <h1 data-hook="main-title">오늘도<br>황금빛 페이지.</h1>
+      <p class="lead" data-hook="main-lead">하나뿐인 한아련.<br>오래보자 우리.</p>
+    </div>
+
+    <p class="edge-word" aria-hidden="true" data-hook="info-en">HANARYON</p>
+
+    <div class="links" aria-label="주요 링크">
+      <a id="lk-soop" href="https://www.sooplive.com/station/rkdmsdl782" target="_blank" rel="noopener">SOOP ↗</a>
+      <a id="lk-youtube" href="https://www.youtube.com/channel/UCQ4p5cW8UnLnXfLDg26oGLA" target="_blank" rel="noopener">YOUTUBE ↗</a>
+      <a id="lk-cafe" href="https://cafe.naver.com/hanaryon" target="_blank" rel="noopener">CAFE ↗</a>
+    </div>
+
+    <footer class="identity">
+      <strong data-hook="info-name">한아련</strong>
+      <span data-hook="info-en">HANARYON</span>
+    </footer>
+
+    <ol class="week" aria-label="이번 주 방송 일정">
+      <li id="day-0"><i>01</i><b>MON</b><em>REST</em></li>
+      <li id="day-1"><i>02</i><b>TUE</b><em>GAME</em></li>
+      <li id="day-2"><i>03</i><b>WED</b><em>GAME</em></li>
+      <li id="day-3"><i>04</i><b>THU</b><em>SONG</em></li>
+      <li id="day-4"><i>05</i><b>FRI</b><em>GAME</em></li>
+      <li id="day-5"><i>06</i><b>SAT</b><em>LONG</em></li>
+      <li id="day-6"><i>07</i><b>SUN</b><em>CHAT</em></li>
+    </ol>
+
+    <p class="legal" data-hook="legal">© 2026 HANARYON OFFICIAL · 비즈니스 문의 oneryon01@gmail.com</p>
+  </div>
+</div>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-desc">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" placeholder="내용을 입력하세요"></textarea>
+    <div class="askbtns">
+      <button type="button" class="no" onclick="closeAsk()">취소</button>
+      <button type="button" class="yes" onclick="sendAsk()">보내기</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="./supabase.js"></script>
+<script>
+/* Day index is 0=Mon ... 6=Sun on both the page and admin. */
+var DAY_IDS = ['day-0','day-1','day-2','day-3','day-4','day-5','day-6'];
+
+function setHook(key, value, html) {
+  var v = txt(value).trim();
+  if (!v) return;
+  document.querySelectorAll('[data-hook="' + key + '"]').forEach(function (el) {
+    if (html) el.innerHTML = esc(v).replace(/\n/g, '<br>');
+    else el.textContent = v;
+  });
+}
+
+async function loadMain() {
+  var p = {};
+  try { p = await loadProfileData(); } catch (e) {}
+  try {
+    initTexts(p);
+
+    ['main-eyebrow','info-name','info-en','next-live','legal'].forEach(function (k) { setHook(k, p[k], false); });
+    ['main-title','main-lead','about-text'].forEach(function (k) { setHook(k, p[k], true); });
+
+    var photo = txt(p['main-photo']).trim();
+    if (photo) document.getElementById('scene-img').src = photo;
+
+    var links = { 'lk-soop': 'link-soop', 'lk-youtube': 'link-youtube', 'lk-cafe': 'link-cafe' };
+    Object.keys(links).forEach(function (id) {
+      var el = document.getElementById(id); if (!el) return;
+      var u = txt(p[links[id]]).trim();
+      if (u) el.href = u;
+      else if (links[id] !== 'link-soop') el.style.display = el.getAttribute('href') ? '' : 'none';
+    });
+    var soop = txt(p['soop-id']).trim();
+    if (soop && !txt(p['link-soop']).trim()) document.getElementById('lk-soop').href = 'https://www.sooplive.com/station/' + soop;
+
+    var days = txt(p.days).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    var todayIdx = (new Date().getDay() + 6) % 7;
+    DAY_IDS.forEach(function (id, i) {
+      var li = document.getElementById(id); if (!li) return;
+      var label = txt(p[id]).trim();
+      if (label) li.querySelector('em').textContent = label;
+      if (days.length) li.classList.toggle('is-off', days.indexOf(String(i)) < 0);
+      li.classList.toggle('is-live', i === todayIdx && (!days.length || days.indexOf(String(i)) >= 0));
+    });
+  } catch (e) {}
+  markReady();
+}
+loadMain();
+
+function openAsk(){ document.getElementById('askmask').classList.add('on'); }
+function closeAsk(){ document.getElementById('askmask').classList.remove('on'); }
+async function sendAsk(){
+  var t = document.getElementById('askmsg');
+  var v = (t.value || '').trim();
+  if (!v) { showToast('내용을 입력하세요'); return; }
+  var ok = await insertRow('inquiries', { message: v });
+  showToast(ok ? '문의를 보냈습니다' : '전송에 실패했습니다. 잠시 후 다시 시도하세요');
+  if (ok) { t.value = ''; closeAsk(); }
+}
+document.getElementById('askmask').addEventListener('click', function (e) { if (e.target.id === 'askmask') closeAsk(); });
+
+(function () {
+  var box = document.getElementById('dkbox');
+  function label(){ box.textContent = document.body.classList.contains('dark') ? '☀ LIGHT' : '☾ DARK'; }
+  box.addEventListener('click', function () {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    label();
+  });
+  label();
+})();
+</script>
+<script src="./fx.js"></script>
+</body>
+</html>

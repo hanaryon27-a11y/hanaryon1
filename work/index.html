@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>업보 · 한아련 HANARYON OFFICIAL</title>
+<meta name="description" content="한아련 업보 장부 — 시청자별 업보 기록">
+<meta name="theme-color" content="#ffd54a">
+<meta property="og:title" content="업보 · 한아련 HANARYON OFFICIAL">
+<meta property="og:description" content="한아련 업보 장부 — 시청자별 업보 기록">
+<meta property="og:image" content="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg">
+<link rel="stylesheet" href="../style.css">
+<style>
+
+.up-bar{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:18px}
+.up-date{font-family:var(--ff-mono);font-weight:800;letter-spacing:.14em;
+  font-size:calc(10px * var(--fs-label));color:var(--text-soft);white-space:nowrap}
+.viewer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.viewer-card{background:var(--card);border:1px solid var(--line);padding:18px 12px;text-align:center;cursor:pointer}
+.viewer-card:hover{border-color:var(--main)}
+.viewer-av,.viewer-av-fb{width:62px;height:62px;margin:0 auto 11px;display:block;object-fit:cover;
+  border:1px solid var(--line-strong)}
+.viewer-av-fb{display:flex;align-items:center;justify-content:center;background:var(--main-light);
+  color:var(--main-deep);font-size:calc(24px * var(--fs-title));font-weight:900}
+.viewer-nick{font-size:calc(13px * var(--fs-body));font-weight:700;word-break:break-all}
+.viewer-id{font-family:var(--ff-mono);font-size:calc(9px * var(--fs-label));color:var(--text-soft);margin-top:3px;word-break:break-all}
+.viewer-total{display:inline-block;margin-top:10px;padding:4px 10px;background:var(--main);color:#0F0B00;
+  font-family:var(--ff-mono);font-weight:800;letter-spacing:.1em;font-size:calc(9px * var(--fs-label))}
+.modal-top{display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line-strong)}
+.modal-av,.modal-av-fb{width:54px;height:54px;object-fit:cover;border:1px solid var(--line-strong);flex:none}
+.modal-av-fb{display:flex;align-items:center;justify-content:center;background:var(--main-light);
+  color:var(--main-deep);font-size:calc(22px * var(--fs-title));font-weight:900}
+.modal-nick{font-size:calc(18px * var(--fs-title));font-weight:900;letter-spacing:-.03em}
+.modal-id{font-family:var(--ff-mono);font-size:calc(9px * var(--fs-label));color:var(--text-soft);margin-top:2px}
+.up-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.up-row .nm{flex:1;font-size:calc(13px * var(--fs-body));font-weight:700}
+.up-row .ev{font-family:var(--ff-mono);font-weight:800;letter-spacing:.12em;font-size:calc(9px * var(--fs-label));
+  padding:3px 8px;border:1px solid var(--main);color:var(--main-deep)}
+.up-row .ct{font-family:var(--ff-mono);font-weight:800;font-size:calc(13px * var(--fs-body));color:var(--main-deep)}
+.modal-empty{padding:30px 0;text-align:center;color:var(--text-soft);font-size:calc(13px * var(--fs-body))}
+@media (max-width:959px){ .viewer-grid{grid-template-columns:repeat(3,1fr)} .up-bar{grid-template-columns:1fr} }
+@media (max-width:400px){ .viewer-grid{grid-template-columns:repeat(2,1fr)} }
+</style>
+<noscript><style>.wrap{opacity:1 !important}</style></noscript>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
+<header class="topbar">
+  <div class="inner">
+    <a class="nav-logo" href="../"><svg class="hex" viewBox="0 0 28 32" aria-hidden="true"><path d="M14 1.5l11.3 6.5v15L14 30.5 2.7 23V8z" fill="none" stroke="var(--main-dark)" stroke-width="2.4"/><circle cx="14" cy="15.7" r="3.4" fill="var(--main)"/></svg>한아련<span class="en">HANARYON</span></a>
+    <button type="button" class="burger" id="burger">MENU</button>
+    <div class="bar-right">
+      <nav class="menu" id="menu" aria-label="사이트 메뉴"><a href="../profile/" data-t="nav-1">프로필</a><a href="../schedule/" data-t="nav-2">일정</a><a href="../song/" data-t="nav-3">노래책</a><a href="../work/" data-t="nav-4" class="act">업보</a><a href="../diary/" data-t="nav-5">일기</a><a href="../dress/" data-t="nav-6">옷장</a></nav>
+      <div class="tools">
+        <button type="button" onclick="openAsk()" data-t="nav-ask">✉ 문의</button>
+        <button type="button" id="dkbox">☾ DARK</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+<div class="pagewrap">
+  <section class="masthead">
+    <p class="ghost" aria-hidden="true">LEDGER</p>
+    <p class="mh-index">INDEX No.04 · LEDGER</p>
+    <div class="mh-row">
+      <div>
+        <h1 class="mh-title">업보</h1>
+        <p class="mh-sub">방송에서 쌓인 기록. 카드를 누르면 종류별로 몇 번인지 볼 수 있습니다.</p>
+      </div>
+      <p class="mh-meta">HANARYON<br><b>FILE 04</b> · LEDGER<br>KEEP THE RECORD</p>
+    </div>
+  </section>
+  <section class="card">
+    <h2 class="card-title"><small>LEDGER</small><span data-t="w-1">업보 장부</span>
+      <span class="right" id="v-count">-</span></h2>
+    <p class="note" data-t="w-note">카드를 누르면 종류별 횟수가 열립니다</p>
+    <div class="up-bar">
+      <input class="search-box" id="q" placeholder="닉네임 또는 아이디 검색">
+      <span class="up-date" id="update-date"></span>
+    </div>
+    <div class="viewer-grid" id="grid"><div class="spinner" style="grid-column:1/-1"></div></div>
+  </section>
+
+<div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button type="button" class="modal-x" onclick="closeModal()" aria-label="닫기">✕</button>
+    <div class="modal-top" id="modal-top"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+</div>
+</div>
+<footer class="sitefoot">
+  <span class="en">HANARYON OFFICIAL</span>
+  © 2026 한아련. All rights reserved.<br>
+  비즈니스 문의 — oneryon01@gmail.com
+</footer>
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-desc">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" placeholder="내용을 입력하세요"></textarea>
+    <div class="askbtns">
+      <button type="button" class="no" onclick="closeAsk()">취소</button>
+      <button type="button" class="yes" onclick="sendAsk()">보내기</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+var viewers = [], types = [], counts = [];
+
+function viewerTotal(vid){
+  return counts.filter(function(c){ return c.viewer_id === vid && c.count > 0; })
+               .reduce(function(s, c){ return s + c.count; }, 0);
+}
+
+function render(list){
+  var grid = document.getElementById('grid');
+  document.getElementById('v-count').textContent = list.length + ' PEOPLE';
+  if (!list.length){
+    grid.innerHTML = '<div style="grid-column:1/-1"><div class="empty"><span class="icon">✦</span>등록된 시청자가 없습니다</div></div>';
+    enableIframeAutoHeight();
+    return;
+  }
+  grid.innerHTML = list.map(function(v){
+    var av = soopAvatarUrl(v.soop_id);
+    var ini = esc(txt(v.nickname).charAt(0) || '?');
+    var avHtml = av
+      ? '<img class="viewer-av" src="' + av + '" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML=&quot;<div class=\'viewer-av-fb\'>' + ini + '</div>&quot;">'
+      : '<div class="viewer-av-fb">' + ini + '</div>';
+    return '<div class="viewer-card" onclick="openModal(' + v.id + ')">' + avHtml
+      + '<div class="viewer-nick">' + esc(v.nickname) + '</div>'
+      + '<div class="viewer-id">' + (txt(v.soop_id).trim() ? esc(v.soop_id) : '&nbsp;') + '</div>'
+      + '<span class="viewer-total">업보 ' + viewerTotal(v.id) + '</span></div>';
+  }).join('');
+  enableIframeAutoHeight();
+}
+
+function openModal(vid){
+  var v = viewers.find(function(x){ return x.id === vid; });
+  if (!v) return;
+  var av = soopAvatarUrl(v.soop_id);
+  var ini = esc(txt(v.nickname).charAt(0) || '?');
+  var avHtml = av
+    ? '<img class="modal-av" src="' + av + '" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML=&quot;<div class=\'modal-av-fb\'>' + ini + '</div>&quot;">'
+    : '<div class="modal-av-fb">' + ini + '</div>';
+  document.getElementById('modal-top').innerHTML = avHtml
+    + '<div><div class="modal-nick">' + esc(v.nickname) + '</div>'
+    + (txt(v.soop_id).trim() ? '<div class="modal-id">' + esc(v.soop_id) + '</div>' : '') + '</div>';
+
+  var my = {};
+  counts.filter(function(c){ return c.viewer_id === vid; }).forEach(function(c){ my[c.type_id] = c.count; });
+  var rows = types.filter(function(t){ return (my[t.id] || 0) > 0; }).map(function(t){
+    return '<div class="up-row"><span class="nm">' + esc(t.name) + '</span>'
+      + (txt(t.category).trim() === '이벤트' ? '<span class="ev">EVENT</span>' : '')
+      + '<span class="ct">×' + my[t.id] + '</span></div>';
+  }).join('');
+  document.getElementById('modal-body').innerHTML = rows || '<div class="modal-empty">아직 쌓인 업보가 없습니다</div>';
+  document.getElementById('ov').classList.add('show');
+}
+function closeModal(){ document.getElementById('ov').classList.remove('show'); }
+
+document.getElementById('q').addEventListener('input', function(){
+  var q = this.value.trim().toLowerCase();
+  render(viewers.filter(function(v){
+    return !q || (txt(v.nickname) + ' ' + txt(v.soop_id)).toLowerCase().indexOf(q) >= 0;
+  }));
+});
+
+async function init(){
+  try { initTexts(await loadProfileData()); } catch (e) {}
+  try {
+    var r = await Promise.all([
+      fetchAll('viewers', { order: 'sort_order', asc: true }),
+      fetchAll('upbo_types', { order: 'sort_order', asc: true }),
+      fetchAll('upbo_counts', { order: 'id', asc: true })
+    ]);
+    viewers = r[0]; types = r[1]; counts = r[2];
+  } catch (e) {}
+  var latest = counts.reduce(function(m, c){ return (c.updated_at && c.updated_at > m) ? c.updated_at : m; }, '');
+  document.getElementById('update-date').textContent = latest ? 'UPDATED ' + latest.slice(0, 10) : '';
+  render(viewers);
+  markReady();
+  enableIframeAutoHeight();
+}
+init();
+</script>
+<script>
+function openAsk(){ document.getElementById('askmask').classList.add('on'); }
+function closeAsk(){ document.getElementById('askmask').classList.remove('on'); }
+async function sendAsk(){
+  var t = document.getElementById('askmsg');
+  var v = (t.value || '').trim();
+  if (!v) { showToast('내용을 입력하세요'); return; }
+  var ok = await insertRow('inquiries', { message: v });
+  showToast(ok ? '문의를 보냈습니다' : '전송에 실패했습니다. 잠시 후 다시 시도하세요');
+  if (ok) { t.value = ''; closeAsk(); }
+}
+document.getElementById('askmask').addEventListener('click', function(e){ if (e.target.id === 'askmask') closeAsk(); });
+
+(function(){
+  var box = document.getElementById('dkbox');
+  function label(){ box.textContent = document.body.classList.contains('dark') ? '☀ LIGHT' : '☾ DARK'; }
+  box.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    label();
+  });
+  label();
+  var b = document.getElementById('burger');
+  b.addEventListener('click', function(){ document.getElementById('menu').classList.toggle('open'); });
+})();
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Overlay · HANARYON</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{ --ov-main:#ffd54a; --ov-ink:#0F0B00; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;overflow:hidden;width:700px;height:120px}
+.bar{display:inline-flex;align-items:center;height:88px;margin:16px 0 0 10px;padding:0 22px 0 0;
+  background:rgba(255,253,246,.94);border:1px solid var(--ov-ink);border-left:6px solid var(--ov-main);
+  opacity:0;transition:opacity .45s ease,width .3s ease;max-width:640px}
+.bar.visible{opacity:1}
+.pic{width:88px;height:88px;flex:none;overflow:hidden;background:var(--ov-main)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.info{padding:0 18px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.kicker{font-family:Arial,Helvetica,sans-serif;font-weight:800;letter-spacing:.24em;font-size:10px;color:#8A6600}
+.title{font-family:'Noto Sans KR',sans-serif;font-size:21px;font-weight:900;letter-spacing:-.04em;
+  color:var(--ov-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:460px}
+.artist{font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;color:#655C4A;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:460px}
+</style>
+</head>
+<body>
+<div class="bar" id="bar">
+  <div class="pic"><img src="https://profile.img.sooplive.co.kr/LOGO/rk/rkdmsdl782/rkdmsdl782.jpg" alt="" onerror="this.style.display='none'"></div>
+  <div class="info">
+    <div class="kicker">NOW PLAYING</div>
+    <div class="title" id="ovTitle">한아련</div>
+    <div class="artist" id="ovArtist"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* Replace these two values with the same ones used in supabase.js. */
+var sb = (typeof supabase !== 'undefined') && supabase.createClient('https://layavdvfxmcgqxqcvtmq.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxheWF2ZHZmeG1jZ3F4cWN2dG1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1NDA1NDMsImV4cCI6MjEwMTExNjU0M30.Jq0EK7zPBFlMQASbPiMyQfxsYWE2oIuCwmP_goDXCL8');
+var lastKey = null;
+
+function fit(){
+  requestAnimationFrame(function(){
+    var bar = document.getElementById('bar');
+    var t = document.getElementById('ovTitle');
+    var a = document.getElementById('ovArtist');
+    var w = Math.min(Math.max(t.scrollWidth, a.scrollWidth) + 40, 480);
+    bar.style.width = (88 + w + 22) + 'px';
+  });
+}
+
+async function poll(){
+  if (!sb) return;
+  try {
+    var r = await sb.from('overlay_state').select('*').eq('id', 1).single();
+    var d = r && r.data;
+    var bar = document.getElementById('bar');
+    if (!d || !d.is_visible || !d.song_title){ bar.classList.remove('visible'); return; }
+    var key = d.song_title + '|' + (d.song_artist || '');
+    if (key === lastKey){ bar.classList.add('visible'); return; }
+    lastKey = key;
+    document.getElementById('ovTitle').textContent = d.song_title;
+    document.getElementById('ovArtist').textContent = d.song_artist || '';
+    fit();
+    bar.classList.add('visible');
+  } catch (e) {}
+}
+poll();
+setInterval(poll, 1500);
+</script>
+</body>
+</html>
